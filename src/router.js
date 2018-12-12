@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home'
-import CompanyList from './views/company/CompanyList'
+import ContestList from './views/contest/ContestList'
 
 Vue.use(Router)
 
@@ -15,9 +15,9 @@ export default new Router({
       component: Home
     },
     {
-      path: '/company/list',
-      name: 'companyList',
-      component: CompanyList
+      path: '/contest/list',
+      name: 'contestList',
+      component: ContestList
     }
   ]
 })

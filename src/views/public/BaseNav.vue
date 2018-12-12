@@ -23,7 +23,7 @@
                 <MenuItem name="1-6">历届毕业</MenuItem>
             </MenuGroup>
         </Submenu>
-        <MenuItem name="2" to="/compnay/list">
+        <MenuItem name="2" to="/contest/list">
             <Icon type="ios-people" />
             比赛中心
         </MenuItem>
