@@ -16,7 +16,7 @@ export default {
     position: absolute; 
     bottom: 0; 
     width: 100%; 
-    height: 60px;/*脚部的高度*/ 
+    height: 60px; /*脚部的高度*/ 
     clear:both; 
   }
 </style>
