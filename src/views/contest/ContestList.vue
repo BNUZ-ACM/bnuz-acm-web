@@ -3,7 +3,7 @@
     <Row type="flex">
       
       <Card style="width:100%; margin-top: 10px;">
-        <Col span="6"><img style="width: 200px;" src="../../assets/contest-logo.png"></Col>
+        <Col span="6"><img style="width: 80%; margin: 0 auto;" src="../../assets/contest-logo.png"></Col>
         <Col span="12">
           <div style="text-align: left;">
             <h2>2018北师珠IT节ACM现场赛</h2>
@@ -26,7 +26,7 @@ IT节ACM程序设计大赛是北京师范大学珠海分校信息技术学院一
         </Col>
       </Card>
       <Card style="width:100%; margin-top: 10px;">
-        <Col span="6"><img style="width: 200px;" src="../../assets/contest-logo.png"></Col>
+        <Col span="6"><img style="width: 80%; margin: 0 auto;" src="../../assets/contest-logo.png"></Col>
         <Col span="12">
           <div style="text-align: left;">
             <h2>2018北师珠IT节ACM现场赛</h2>
@@ -50,7 +50,7 @@ IT节ACM程序设计大赛是北京师范大学珠海分校信息技术学院一
         </Col>
       </Card>
       <Card style="width:100%; margin-top: 10px;">
-        <Col span="6"><img style="width: 200px;" src="../../assets/contest-logo.png"></Col>
+        <Col span="6"><img style="width: 80%; margin: 0 auto;" src="../../assets/contest-logo.png"></Col>
         <Col span="12">
           <div style="text-align: left;">
             <h2>2018北师珠IT节ACM现场赛</h2>

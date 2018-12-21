@@ -18,7 +18,7 @@
     </div>
     <div slot="footer">
         <Button type="error" size="large">登录</Button>
-        <Button type="default" size="large">取消</Button>
+        <Button type="default" size="large" @click="dialogFormVisible = false">取消</Button>
     </div>
   </Modal>
 </template>
