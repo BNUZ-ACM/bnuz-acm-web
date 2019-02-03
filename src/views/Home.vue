@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/big-logo.png">
     <center>
+      <img alt="Vue logo" src="../assets/big-logo.png">
       <div>
         <h1 class="word-size-h1">思考-灵感-气球</h1>
         <h1 class="word-size-h1">BNUZ ACM Team</h1>

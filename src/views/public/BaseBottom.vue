@@ -1,5 +1,7 @@
 <template>
-  <h3 class="bottom-text">{{ msg }}</h3>
+  <center>
+   <h3 class="bottom-text">{{ msg }}</h3>
+  </center>
 </template>
 
 <script>
@@ -13,7 +15,8 @@ export default {
 
 <style lang="stylus" scoped>
   .bottom-text {
-    position: absolute; 
+    // position: absolute; 
+    margin-top: 30px;
     bottom: 0; 
     width: 100%; 
     height: 60px; /*脚部的高度*/ 
