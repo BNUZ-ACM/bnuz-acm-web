@@ -33,8 +33,8 @@
                     </h1>
                     比赛报名已经截止，各位不用灰心，请留意下次比赛时间。
                     如真有特殊需要请联系比赛主办方。<br>
-                    <Button type="error" style="margin-top: 20px;">
-                        查看名单
+                    <Button type="error" style="margin-top: 20px;" disabled>
+                        报名截止
                     </button>
                 </Col>
             </Row>

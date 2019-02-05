@@ -3,7 +3,7 @@
         
         <Content :style="{padding: '0 200px'}">
             
-            <h1 style="font-size: 3em;">
+            <h1 class="big-title">
                 ACM-ICPC校队
             </h1>
             <Divider />      
@@ -190,9 +190,9 @@
         background: #228b22 !important;
     }
 </style>
-
 <script lang="ts">
 import Vue from 'vue'
+
 export default Vue.extend({
     
 })

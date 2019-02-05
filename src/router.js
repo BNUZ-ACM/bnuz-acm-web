@@ -4,6 +4,9 @@ import Home from './views/Home'
 import ContestList from './views/contest/ContestList'
 import ContestInfo from './views/contest/ContetInfo'
 import SchoolTeam from './views/crews/SchoolTeam'
+import ACMDetail from './views/acm/Detail.vue'
+import ACMRole from './views/acm/Role.vue'
+import ACMClaim from './views/acm/Claim.vue'
 
 Vue.use(Router)
 
@@ -30,6 +33,21 @@ export default new Router({
       path: '/crews/team',
       name: 'schoolTeam',
       component: SchoolTeam
+    },
+    {
+      path: '/acm/detail',
+      name: 'detail',
+      component: ACMDetail,
+    },
+    {
+      path: '/acm/role',
+      name: 'role',
+      component: ACMRole,
+    },
+    {
+      path: '/acm/claim',
+      name: 'role',
+      component: ACMClaim,
     }
   ]
 })

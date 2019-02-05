@@ -13,9 +13,9 @@
                 ACM简介
             </template>
             <MenuGroup title="ACM简述">
-                <MenuItem name="1-1">ACM介绍</MenuItem>
-                <MenuItem name="1-2">竞赛简介</MenuItem>
-                <MenuItem name="1-3">编程要求</MenuItem>
+                <MenuItem name="1-1" to='/acm/detail'>ACM介绍</MenuItem>
+                <MenuItem name="1-2" to='/acm/role'>竞赛规则</MenuItem>
+                <MenuItem name="1-3" to='/acm/claim'>编程要求</MenuItem>
             </MenuGroup>
             <MenuGroup title="校队">
                 <MenuItem name="1-4" to="/crews/team">校队介绍</MenuItem>
