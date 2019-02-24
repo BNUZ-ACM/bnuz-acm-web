@@ -18,8 +18,8 @@
                 <MenuItem name="1-3" to='/acm/claim'>编程要求</MenuItem>
             </MenuGroup>
             <MenuGroup title="校队">
-                <MenuItem name="1-4" to="/crews/team">校队介绍</MenuItem>
-                <MenuItem name="1-5">获奖情况</MenuItem>
+                <MenuItem name="1-4" to="/acm/crews/team">校队介绍</MenuItem>
+                <MenuItem name="1-5" to="/acm/crews/honor">获奖情况</MenuItem>
                 <MenuItem name="1-6">历届毕业</MenuItem>
             </MenuGroup>
         </Submenu>

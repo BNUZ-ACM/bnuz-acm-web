@@ -4,8 +4,13 @@
         <Content :style="{padding: '0 200px'}">
             
             <h1 class="big-title">
-                ACM-ICPC校队
+                ACM-ICPC校队成员
             </h1>
+            <Divider />
+            <span class="content-size">
+                <h2>发展历史</h2>
+                2003年，北师珠ACM协会成立，创立初期虽经历了各种困难与挫折，但校队在失败中不断积累经验教训，终于在2007年首次闯入亚洲区区域赛，并取得了铜牌的成绩。此后校队走上了快速发展的道路，在各大ACM比赛中先后斩获无数佳绩。
+            </span>
             <Divider />      
             <div>
                 <Anchor :affix="true" show-ink 

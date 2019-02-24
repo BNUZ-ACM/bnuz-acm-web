@@ -7,47 +7,54 @@ import SchoolTeam from './views/crews/SchoolTeam'
 import ACMDetail from './views/acm/Detail.vue'
 import ACMRole from './views/acm/Role.vue'
 import ACMClaim from './views/acm/Claim.vue'
-
+import ACMHonor from './views/acm/Honor.vue'
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: Home
-    },
-    {
-      path: '/contest/list',
-      name: 'contestList',
-      component: ContestList
-    },
-    {
-      path: '/contest/info',
-      name: 'contestInfo',
-      component: ContestInfo
-    },
-    {
-      path: '/crews/team',
-      name: 'schoolTeam',
-      component: SchoolTeam
-    },
-    {
-      path: '/acm/detail',
-      name: 'detail',
-      component: ACMDetail,
-    },
-    {
-      path: '/acm/role',
-      name: 'role',
-      component: ACMRole,
-    },
-    {
-      path: '/acm/claim',
-      name: 'role',
-      component: ACMClaim,
-    }
-  ]
+    mode: 'history',
+    base: process.env.BASE_URL,
+    routes: [{
+            path: '/',
+            name: 'home',
+            component: Home
+        },
+        // 比赛
+        {
+            path: '/contest/list',
+            name: 'contestList',
+            component: ContestList
+        },
+        {
+            path: '/contest/info',
+            name: 'contestInfo',
+            component: ContestInfo
+        },
+        // acm简介
+        {
+            path: '/acm/detail',
+            name: 'detail',
+            component: ACMDetail,
+        },
+        {
+            path: '/acm/role',
+            name: 'role',
+            component: ACMRole,
+        },
+        {
+            path: '/acm/claim',
+            name: 'claim',
+            component: ACMClaim,
+        },
+        // 校队
+        {
+            path: '/acm/crews/team',
+            name: 'schoolTeam',
+            component: SchoolTeam
+        },
+        {
+            path: '/acm/crews/honor',
+            name: 'honor',
+            component: ACMHonor,
+        }
+    ]
 })
