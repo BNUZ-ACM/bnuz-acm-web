@@ -11,7 +11,6 @@
 </template>
 
 <style>
-/* @import '@/style/base.css'; */
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -43,6 +42,7 @@ html,body{
 </style>
 
 <script>
+import '@/style/base.css'
 import BaseNav from './views/public/BaseNav.vue';
 import BaseBottom from './views/public/BaseBottom.vue';
 
