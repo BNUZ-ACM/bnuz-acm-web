@@ -8,6 +8,8 @@ import ACMDetail from './views/acm/Detail.vue'
 import ACMRole from './views/acm/Role.vue'
 import ACMClaim from './views/acm/Claim.vue'
 import ACMHonor from './views/acm/Honor.vue'
+import PersonalCenter from './views/personal/Center.vue'
+
 Vue.use(Router)
 
 export default new Router({
@@ -55,6 +57,12 @@ export default new Router({
             path: '/acm/crews/honor',
             name: 'honor',
             component: ACMHonor,
+        },
+        // 个人中心
+        {
+            path: '/personal/center',
+            name: 'center',
+            component: PersonalCenter,
         }
     ]
 })

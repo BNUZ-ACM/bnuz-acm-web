@@ -40,8 +40,21 @@
             </Row>
             <Divider />
             <h1>已报名名单</h1><br>
-            <Table border :columns="team_col" :data="team_data" height="500"></Table>
+            <Table border :columns="teamCol" :data="teamData" height="500"></Table>
         </Content>
+        <Drawer title="加入队伍" :closable="false" v-model="joinTeam">
+            <h3>地表最帅orz</h3>
+            <br>
+            <p>当前人数：3人（已满人）</p>
+            <p>曾庆望（1701111111）</p>
+            <p>郑景仁（1701111112）</p>
+            <p>林钰浩（1701111113）</p>
+            <br>
+            <p>备注：RE WA TLE</p>
+            <br>
+            <p><b>注意：该队伍需要密码才可进入</b></p>
+            <Input search enter-button="加入" placeholder="请输入该队伍密码" disabled/>
+        </Drawer>
     </div>
 </template>
 
@@ -78,7 +91,9 @@
     export default {
         data () {
             return {
-                team_col: [
+                joinTeam: false,
+                showTeamData: false,
+                teamCol: [
                     {
                         title: '队号',
                         key: 'team_id'
@@ -154,11 +169,11 @@
                                         size: 'small'
                                     },
                                     style: {
-                                        marginRight: '5px'
+                                        marginRight: '5px',
                                     },
                                     on: {
                                         click: () => {
-                                            this.show(params.index)
+                                            this.changeJoinTeam(true);
                                         }
                                     }
                                 }, '加入队伍')
@@ -166,7 +181,7 @@
                         }
                     }
                 ],
-                team_data: [
+                teamData: [
                     {
                         team_id: 1,
                         leader_name: 'lyt',
@@ -210,6 +225,14 @@
                         need_password: 0
                     }
                 ],
+            }
+        },
+        methods: {
+            changeJoinTeam(value) {
+                this.joinTeam = value;
+            }, 
+            changeShowTeamData(value) {
+                this.showTeamData = value;
             }
         }
     }

@@ -35,6 +35,8 @@
             <Icon type="ios-construct" />
             WeJudgeOJ
         </MenuItem>
+        <MenuItem name="6" to="/personal/center">个人中心</MenuItem>
+
         <MenuItem name="5" class="right-box"  >
           <div @click="showLoginDialog = true">
             登录
