@@ -20,7 +20,7 @@
             <MenuGroup title="校队">
                 <MenuItem name="1-4" to="/acm/crews/team">校队介绍</MenuItem>
                 <MenuItem name="1-5" to="/acm/crews/honor">获奖情况</MenuItem>
-                <MenuItem name="1-6">历届毕业</MenuItem>
+                <MenuItem name="1-6" to="/acm/crews/dalao">历届毕业</MenuItem>
             </MenuGroup>
         </Submenu>
         <MenuItem name="2" to="/contest/list">

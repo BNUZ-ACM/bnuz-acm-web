@@ -30,12 +30,46 @@
         </Card>
         <br>
         <h1>代码样例</h1>
+        <h2>下面是HDU1000题目的标准代码：</h2>
         <Card style="width:100%; margin-top: 10px;">
-            ACM亚洲区预选赛颁发两个系列的获奖证书：
-            <br>
-            1、金、银、铜奖证书，按排名颁发，颁奖比例分别为参赛队数的10%，20%和30%。
-            <br>
-            2、ICPC排名证书，按学校排序，每个学校只取排序最高的队进行排序，其余队和下一所学校的队并列排名，学校排名前30名且获得铜奖的队颁发排名证书。
+
+        <h3>C语言</h3>
+            <div v-highlight>
+                <pre><code class="c">#include &ltstdio.h&gt
+int main(){
+    int a,b;
+    while(scanf("%d %d",&a, &b) != EOF){
+        printf("%d\n",a+b);
+    }
+    return 0;
+}</code></pre>
+            </div>
+            <h3>C++</h3>
+            <div v-highlight>
+                <pre><code class="c++">#include &ltiostream&gt
+using namespace std;
+int main(){
+    int a,b;
+    while(cin >> a >> b){
+        cout &lt&lt a+b &lt&lt endl;
+    }
+    return 0;
+}</code></pre>
+            </div>
+            <h3>Java</h3>
+            <div v-highlight>
+                <pre><code class="java">import java.util.Scanner;
+public class Main {
+	public static void main(String[] args){
+		Scanner scan = new Scanner(System.in);
+		while(scan.hasNext()){
+			int a = scan.nextInt();
+			int b = scan.nextInt();
+			System.out.println(String.format("%d", a + b));
+		}
+	}
+}</code></pre>
+            </div>
         </Card>
         <br>
         <h1>评判系统返回提示语</h1>

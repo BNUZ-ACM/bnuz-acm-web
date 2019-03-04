@@ -5,7 +5,17 @@ import router from './router.js';
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';
 import globalComponentRegister from './components/global/globalComponentRegister';
+import hljs from 'highlight.js';
+import 'highlight.js/styles/googlecode.css' //样式文件
 
+Vue.directive('highlight', function(el) {
+    let blocks = el.querySelectorAll('pre code');
+    setTimeout(() => {
+        blocks.forEach((block) => {
+            hljs.highlightBlock(block)
+        })
+    }, 200)
+})
 Vue.use(VueRouter);
 Vue.use(iView);
 
