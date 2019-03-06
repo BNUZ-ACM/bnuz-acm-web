@@ -2,14 +2,16 @@
  * @Author: yhy
  * @Date: 2018-07-24 12:52:07
  * @Last Modified by: yhy
- * @Last Modified time: 2019-03-05 14:13:48
+ * @Last Modified time: 2019-03-06 10:28:54
  */
 // base.js
 // 封装axios，为api提供基本方法
 import axios from 'axios'
+import config from '../../config'
 
 // 设置请求baseURL
-// axios.defaults.baseURL = '127.0.0.1';
+axios.defaults.baseURL = config.httpUrl();
+axios.defaults.timeout = 6000;
 
 // 设置默认请求头
 axios.defaults.headers = {
