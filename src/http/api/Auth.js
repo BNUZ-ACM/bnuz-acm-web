@@ -1,9 +1,9 @@
 import { formPost } from '../base/baseHttp'
 
-export const login = (username, password) => {
-  const data = {
-    username,
-    password
-  }
-  return formPost('/login', data)
+export const login = (userId, password) => {
+    const data = {
+        userId,
+        password
+    }
+    return formPost('/api/user/login', data)
 }

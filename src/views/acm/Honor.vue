@@ -25,18 +25,22 @@
 </style>
 
 <script>
+import { getHonorList } from '@/http/api/Honor'
+
 export default {
     data () {
         return {
+            honorType: ['ICPC', 'CCPC', 'GDCPC'],
+            prizeType: ['优胜奖', '金奖', '银奖', '铜奖', '冠军', '亚军', '季军'],
             columns: [
                 {
                     title: '年份',
-                    key: 'years',
+                    key: 'year',
                     sortable: true
                 },
                 {
                     title: '竞赛名称',
-                    key: 'contestName',
+                    key: 'name',
                     filters: [
                         {
                             label: 'ICPC',
@@ -53,18 +57,7 @@ export default {
                     ],
                     filterMultiple: false,
                     filterMethod (value, row) {
-                        let contestName = row.contestName
-                        if (value === 1) {
-                            return contestName.indexOf('icpc') != -1 || contestName.indexOf('ICPC') != -1;
-                        } else if (value === 2) {
-                            return contestName.indexOf('CCPC') != -1 
-                                || contestName.indexOf('CCPC') != -1
-                                || contestName.indexOf('中国大学生') != -1;
-                        } else if (value == 3) {
-                            return contestName.indexOf('gdcpc') != -1 
-                                || contestName.indexOf('gdcpc') != -1
-                                || contestName.indexOf('广东省') != -1;
-                        }
+                        return value === row.type
                     }
                 },
                 {
@@ -97,50 +90,14 @@ export default {
                 },
                 {
                     title: '队员',
-                    key: 'member'
+                    key: 'players'
                 },
                 {
                     title: '队名',
-                    key: 'teamName'
+                    key: 'name'
                 }
             ],
-            honorData: [
-                {
-                    years: 2007,
-                    contestName: 'ACM-ICPC亚洲区域赛成都站',
-                    honor: '铜奖',
-                    member: '黄敬腾 汪大伟 岑启超',
-                    teamName: 'NULL'
-                },
-                {
-                    years: 2007,
-                    contestName: '广东省大学生程序设计竞赛',
-                    honor: '银奖',
-                    member: '周科 邹振斌 苏奕虹',
-                    teamName: 'BNUEP_TribeHero'
-                },
-                {
-                    years: 2007,
-                    contestName: '广东省大学生程序设计竞赛',
-                    honor: '银奖',
-                    member: '薄涛 汪大炜 岑启超',
-                    teamName: 'BNUEP_AC_Endless'
-                },
-                {
-                    years: 2007,
-                    contestName: '广东省大学生程序设计竞赛',
-                    honor: '铜奖',
-                    member: '杨潇 杨理垚 周艳飞',
-                    teamName: 'BNUEP_Blackhorse'
-                },
-                {
-                    years: 2008,
-                    contestName: '广东省大学生程序设计竞赛',
-                    honor: '金奖',
-                    member: '杨理垚 尚鹏 杨潇',
-                    teamName: 'NULL'
-                },
-            ]
+            honorData: []
         }
     },
     methods: {
@@ -154,6 +111,24 @@ export default {
             }
             return '';
         },
+        async getAllHonorData() {
+            const data = await getHonorList();
+            if (data.status) {
+                this.honorData = data.data.list
+                for (let i = 0; i < this.honorData.length; i++) {
+                    this.honorData[i].years = this.honorData[i].year
+                    this.honorData[i].honor = this.filterPrizeType(this.honorData[i].prize)
+                }
+            }
+        },
+        filterPrizeType(type) {
+            return this.prizeType[type]
+        },
+
+    },
+    created() {
+        console.log("in created")
+        this.getAllHonorData()
     }
 }
 </script>

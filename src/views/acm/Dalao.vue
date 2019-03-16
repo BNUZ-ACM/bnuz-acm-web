@@ -9,6 +9,8 @@
 </template>
 
 <script>
+import { getDalaoList } from '@/http/api/Dalao'
+
 export default {
     data () {
         return {
@@ -27,30 +29,20 @@ export default {
                     key: 'unit'
                 },
             ],
-            dalaoData: [
-                {
-                    year: 2007,
-                    name: '周志明',
-                    unit: '远光',
-                },
-                {
-                    year: 2007,
-                    name: '周志明',
-                    unit: '远光',
-                },
-                {
-                    year: 2007,
-                    name: '周志明',
-                    unit: '远光',
-                },
-                {
-                    year: 2007,
-                    name: '周光进',
-                    unit: '东方海外',
-                },
-            ]
+            dalaoData: []
         }
     },
+    methods: {
+        async getAllDalaoData() {
+            let data = await getDalaoList()
+            if (data.status) {
+                this.dalaoData = data.data.list
+            }
+        }
+    },
+    created() {
+        this.getAllDalaoData()
+    }
 }
 </script>
 

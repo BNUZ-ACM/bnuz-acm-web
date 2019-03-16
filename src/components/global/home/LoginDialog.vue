@@ -13,7 +13,7 @@
         <FormItem label="密码" prop="password">
             <Input type="password" v-model="formValidate.password" placeholder="请输入你的密码，第一次登录密码为教务密码"></Input>
         </FormItem>
-        
+        <Alert type="error" v-if="isPromptShow" show-icon>{{errorMessage}}</Alert>
       </Form>
     </div>
     <div slot="footer">
@@ -41,9 +41,11 @@ export default {
   },
   data () {
     return {
+        isPromptShow: false,
+        errorMessage: '',
         formValidate: {
             username: '',
-            password: ''
+            password: '',
         },
         ruleValidate: {
             username: [
@@ -58,6 +60,13 @@ export default {
   methods: {
     async login() {
       const data = await login(this.formValidate.username, this.formValidate.password);
+      console.log(data)
+      if (data.status) {
+        // 登录成功塞token
+      } else {
+        this.errorMessage = data.errorMsg;
+        this.isPromptShow = true;
+      }
     }
   }
 }
