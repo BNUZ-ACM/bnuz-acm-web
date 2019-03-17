@@ -94,7 +94,7 @@ export default {
                 },
                 {
                     title: '队名',
-                    key: 'name'
+                    key: 'teamName'
                 }
             ],
             honorData: []

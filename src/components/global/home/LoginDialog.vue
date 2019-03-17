@@ -24,6 +24,7 @@
 </template>
 <script>
 import { login } from '@/http/api/Auth'
+import { getUserInfo } from '@/http/api/User'
 
 export default {
   props: {
@@ -63,6 +64,13 @@ export default {
       console.log(data)
       if (data.status) {
         // 登录成功塞token
+        this.$store.commit("login", ret.data);
+        localStorage.setItem("token", ret.data);
+        getUserInfo().then((ret) => {
+          console.log(ret.data)
+          this.$store.commit("setUser", ret.data);
+          this.$router.push({ path: "/" });
+        })
       } else {
         this.errorMessage = data.errorMsg;
         this.isPromptShow = true;

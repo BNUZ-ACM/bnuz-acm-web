@@ -52,7 +52,10 @@ export default new Router({
         {
             path: '/acm/crews/team',
             name: 'schoolTeam',
-            component: SchoolTeam
+            component: SchoolTeam,
+            meta: {
+                title: '校队介绍'
+            }
         },
         {
             path: '/acm/crews/honor',
