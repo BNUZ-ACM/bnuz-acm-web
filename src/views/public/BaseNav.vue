@@ -35,13 +35,25 @@
             <Icon type="ios-construct" />
             WeJudgeOJ
         </MenuItem>
-        <MenuItem name="6" to="/personal/center">个人中心</MenuItem>
 
-        <MenuItem name="5" class="right-box"  >
+        <MenuItem name="5" class="right-box" v-if="!isLogin">
           <div @click="showLoginDialog = true">
             登录
           </div>
         </MenuItem>
+        <Submenu name="5" class="right-box" v-if="isLogin">
+          <template slot="title">
+            {{username}}
+          </template>
+          <MenuGroup title="用户">
+              <MenuItem name="6" to="/personal/center">个人中心</MenuItem>
+              <MenuItem name="3-2">
+                <div  @click="logout">
+                  退出登录
+                </div>
+              </MenuItem>              
+          </MenuGroup>
+        </Submenu>
       </div>
     </Menu>
     <home-login-dialog :formVisible.sync="showLoginDialog"/>
@@ -52,11 +64,30 @@
 export default {
   data() {
     return {
-      showLoginDialog: false
+      showLoginDialog: false,
+      username: "",
+      activeIndex: "1",
+      showLoginDialog: false,
+      formType: false
     }
   },
   methods: {
-
+    logout() {
+      this.$store.commit("logout");
+    }
+  },
+  computed: {
+    isLogin: {
+      get: function() {
+        this.$store.dispatch("isLogin");
+        console.log(this.$store.getters)
+        this.username = this.$store.getters.username;
+        return this.$store.getters.loginStatus;
+      }
+    }
+  },
+  mounted() {
+    this.username = this.$store.getters.username;
   }
 }
 </script>

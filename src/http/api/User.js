@@ -1,6 +1,10 @@
 import { formGet } from '../base/baseHttp'
 
-export const getInfo = () => {
-    const data = {}
-    return formGet('/api/user/detail', data)
+class User {
+    getInfo() {
+        const data = {}
+        return formGet('/api/user/detail', data)
+    }
 }
+
+export default new User();

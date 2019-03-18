@@ -11,8 +11,8 @@ import Request from '../util/request_util'
 import Cookie from '../util/cookie_util'
 
 Vue.use(Vuex)
-// store 中保存的内容是需要全局保存的状态。
-// 暂时想到的只有用户的登陆状态等信息
+    // store 中保存的内容是需要全局保存的状态。
+    // 暂时想到的只有用户的登陆状态等信息
 
 /* eslint-disable no-new */
 export default new Vuex.Store({
@@ -24,7 +24,7 @@ export default new Vuex.Store({
     getters: {
         username: state => {
             if (state.user != null) {
-                return state.user.nickName;
+                return state.user.userName;
             } else {
                 return null;
             }
