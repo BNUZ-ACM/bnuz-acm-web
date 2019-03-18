@@ -2,12 +2,15 @@
  * @Author: yhy
  * @Date: 2018-07-24 12:53:02
  * @Last Modified by: yhy
- * @Last Modified time: 2018-11-13 20:21:47
+ * @Last Modified time: 2019-03-18 14:09:31
  */
+import Vue from 'vue'
+import Vuex from 'vuex'
 import UserApi from '../http/api/User'
 import Request from '../util/request_util'
 import Cookie from '../util/cookie_util'
 
+Vue.use(Vuex)
 // store 中保存的内容是需要全局保存的状态。
 // 暂时想到的只有用户的登陆状态等信息
 

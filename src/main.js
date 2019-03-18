@@ -19,7 +19,6 @@ Vue.directive('highlight', function(el) {
 })
 Vue.use(VueRouter);
 Vue.use(iView);
-Vue.use(Vuex)
 
 globalComponentRegister()
 
