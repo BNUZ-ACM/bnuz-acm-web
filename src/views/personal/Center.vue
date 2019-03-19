@@ -77,9 +77,27 @@
 export default {
     data() {
         return {
-            color: "#00a2ae"
+            color: "#00a2ae",
+            acmData: {},
+            userData: {},
         }
-    }
+    },
+    methods: {
+        filterDay(time) {
+            if (time == -1) {
+                return "哇, 你连题都没刷过来玩什么ACM";
+            }
+            time = time / 1000 / 3600 / 24
+            if (time == 0) {
+                return "昨天有刷题,很棒噢, 继续努力！"
+            } else {
+                return '小懒虫你已经<span style="font-size: 2em;">' + time + '</span>天没有ac了，快要成咸鱼了噢！';
+            }
+        },
+        getAcmInfo() {
+            
+        }
+    },
 }
 </script>
 

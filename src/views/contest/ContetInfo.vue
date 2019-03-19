@@ -2,10 +2,10 @@
      <div>
         <Content :style="{padding: '0 200px'}">
             <h1 style="font-size: 2.5em;">
-                2018北师珠IT节ACM现场赛
+                {{this.contestData.contestName}} {{this.contestData.style | filterContestType}}
             </h1>
             <h2>
-                报名截止时间：2018-04-12 12:00
+                报名截止时间：{{this.contestData.signUpEndTime | filterDate}}
             </h2>
             <Divider />
             <Row>
@@ -88,11 +88,15 @@
 
 
 <script>
+    import ContestApi from '@/http/api/Contest'
+    import Request from '@/util/request_util'
+    import util from '@/util/tool_util'
     export default {
         data () {
             return {
                 joinTeam: false,
                 showTeamData: false,
+                contestData: {},
                 teamCol: [
                     {
                         title: '队号',
@@ -227,13 +231,33 @@
                 ],
             }
         },
+        filters: {
+            filterDate: util.timeFilter,
+            filterContestType: function(type) {
+                if (type == 0) {
+                    return " (个人赛)"
+                } else {
+                    return " (组队赛)"
+                }
+            }
+        },
         methods: {
             changeJoinTeam(value) {
                 this.joinTeam = value;
             }, 
             changeShowTeamData(value) {
                 this.showTeamData = value;
+            },
+            getContestData() {
+                let id = this.$route.query.id
+                Request.msg(ContestApi.getContestDetail, [id], (ret) => {
+                    console.log(ret.data)
+                    this.contestData = ret.data
+                })
             }
+        },
+        created() {
+            this.getContestData()
         }
     }
 </script>

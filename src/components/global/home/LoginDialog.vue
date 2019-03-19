@@ -25,6 +25,7 @@
 <script>
 import { login } from '@/http/api/Auth'
 import UserApi from '@/http/api/User'
+import Request from '../../../util/request_util'
 
 export default {
   props: {
@@ -60,22 +61,19 @@ export default {
   },
   methods: {
     async login() {
-      const data = await login(this.formValidate.username, this.formValidate.password);
-      console.log(data)
-      if (data.status) {
+      // const data = await login(this.formValidate.username, this.formValidate.password);
+      // console.log(data)
+      Request.msg(login, [this.formValidate.username, this.formValidate.password], (ret) => {
         // 登录成功塞token
         this.closeDialog();
-        this.$store.commit("login", data.data);
-        localStorage.setItem("token", data.data);
+        this.$store.commit("login", ret.data);
+        localStorage.setItem("token", ret.data);
         UserApi.getInfo().then((ret) => {
           console.log(ret)
           this.$store.commit("setUser", ret.data);
           // this.$router.push({ path: "/" });
         })
-      } else {
-        this.errorMessage = data.errorMsg;
-        this.isPromptShow = true;
-      }
+      })
     },
     closeDialog() {
       this.formValidate.username = '';
