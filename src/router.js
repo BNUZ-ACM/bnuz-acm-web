@@ -10,6 +10,8 @@ import ACMClaim from './views/acm/Claim.vue'
 import ACMHonor from './views/acm/Honor.vue'
 import ACMDalao from './views/acm/Dalao.vue'
 import PersonalCenter from './views/personal/Center.vue'
+import CourseList from './views/course/CourseList'
+import CourseInfo from './views/course/CourseInfo'
 
 Vue.use(Router)
 
@@ -19,34 +21,53 @@ export default new Router({
     routes: [{
             path: '/',
             name: 'home',
-            component: Home
+            component: Home,
+            meta: {
+                title: '北京师范大学珠海分校ACM协会官网'
+            }
         },
         // 比赛
         {
             path: '/contest/list',
             name: 'contestList',
-            component: ContestList
+            component: ContestList,
+            meta: {
+                title: '比赛列表'
+            }
+
         },
         {
             path: '/contest/info',
             name: 'contestInfo',
-            component: ContestInfo
+            component: ContestInfo,
+            meta: {
+                title: '比赛详情'
+            }
         },
         // acm简介
         {
             path: '/acm/detail',
             name: 'detail',
             component: ACMDetail,
+            meta: {
+                title: 'ACM简介'
+            }
         },
         {
             path: '/acm/role',
             name: 'role',
             component: ACMRole,
+            meta: {
+                title: 'ACM规则'
+            }
         },
         {
             path: '/acm/claim',
             name: 'claim',
             component: ACMClaim,
+            meta: {
+                title: '编程要求'
+            }
         },
         // 校队
         {
@@ -61,17 +82,43 @@ export default new Router({
             path: '/acm/crews/honor',
             name: 'honor',
             component: ACMHonor,
+            meta: {
+                title: '获奖情况'
+            }
         },
         {
             path: '/acm/crews/dalao',
             name: 'dalao',
             component: ACMDalao,
+            meta: {
+                title: '历届毕业'
+            }
         },
         // 个人中心
         {
             path: '/personal/center',
             name: 'center',
             component: PersonalCenter,
+            meta: {
+                title: '个人中心'
+            }
+        },
+        // 课程
+        {
+            path: '/course/list',
+            name: 'courseList',
+            component: CourseList,
+            meta: {
+                title: '课程列表'
+            }
+        },
+        {
+            path: '/course/info',
+            name: 'course',
+            component: CourseInfo,
+            meta: {
+                title: '课程信息'
+            }
         }
     ]
 })

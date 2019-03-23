@@ -27,15 +27,16 @@
             <Icon type="ios-people" />
             比赛中心
         </MenuItem>
-        <MenuItem name="3">
+        <MenuItem name="3" to="/course/list">
             <Icon type="ios-construct" />
             协会课程
         </MenuItem>
-        <MenuItem name="4">
-            <Icon type="ios-construct" />
-            WeJudgeOJ
-        </MenuItem>
-
+        <a target="_blank" :href="'https://www3.wejudge.net'" >
+          <MenuItem name="4">
+              <Icon type="ios-construct" />
+              WeJudgeOJ
+          </MenuItem>
+        </a>
         <MenuItem name="5" class="right-box" v-if="!isLogin">
           <div @click="showLoginDialog = true">
             登录
@@ -45,14 +46,12 @@
           <template slot="title">
             {{username}}
           </template>
-          <MenuGroup title="用户">
-              <MenuItem name="6" to="/personal/center">个人中心</MenuItem>
-              <MenuItem name="3-2">
-                <div  @click="logout">
-                  退出登录
-                </div>
-              </MenuItem>              
-          </MenuGroup>
+          <MenuItem name="6" to="/personal/center">个人中心</MenuItem>
+          <MenuItem name="3-2">
+            <div  @click="logout">
+              退出登录
+            </div>
+          </MenuItem> 
         </Submenu>
       </div>
     </Menu>

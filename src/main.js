@@ -4,7 +4,7 @@ import App from './App.vue';
 import router from './router.js';
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';
-import globalComponentRegister from './components/global/globalComponentRegister';
+import globalComponentRegister from './views/components/global/globalComponentRegister';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/googlecode.css' //样式文件
 import store from './store'

@@ -5,7 +5,7 @@
         </div>
         <div id="nav">
         </div>
-        <router-view/>
+        <router-view title="北京师范大学珠海分校ACM协会"/>
         <base-bottom msg="Copyright ©2018 北京师范大学珠海分校-ACM协会 "/>
     </div>
 </template>

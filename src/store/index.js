@@ -29,9 +29,23 @@ export default new Vuex.Store({
                 return null;
             }
         },
+        userId: state => {
+            if (state.user != null) {
+                return state.user.userId;
+            } else {
+                return null;
+            }
+        },
         loginStatus: state => {
             return state.isLogin;
-        }
+        },
+        userData: state => {
+            if (state.user != null) {
+                return state.user;
+            } else {
+                return null;
+            }
+        },
     },
     mutations: {
         login(state, token) {
@@ -66,6 +80,9 @@ export default new Vuex.Store({
                         state.state.user = ret.data;
                     }, err => {
                         state.state.isLogin = false;
+                        localStorage.removeItem("token");
+                        token = Cookie.set("token", "");
+
                     }, false);
                 }
             }

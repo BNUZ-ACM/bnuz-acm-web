@@ -25,11 +25,11 @@
 <script>
 import { login } from '@/http/api/Auth'
 import UserApi from '@/http/api/User'
-import Request from '../../../util/request_util'
+import Request from '@/util/request_util'
 
 export default {
   props: {
-    formVisible: false
+    formVisible: false,
   },
   computed: {
     dialogFormVisible: {
