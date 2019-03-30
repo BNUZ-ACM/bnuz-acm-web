@@ -8,67 +8,72 @@
                     <span class="icon-content">Y</span>
                 </Avatar>
                 <br><br>
-                <p>叶启权</p>
+                <p>{{userData.userName}}</p>
                 <p>2016届ACM协会会长</p>
                 <Tooltip content="我不要做咸鱼！点击旁边按钮刷新数据~">
-                    <p v-html="this.filterDay(acmData.lastAcceptTime)">{{filterDay(acmData.lastAcceptTime)}}</p>
+                    <p>
+                        {{this.filterDay(acmData == null ? null : acmData.lastAcceptTime)}}
+                    </p>
                 </Tooltip>
                 <Tooltip content="点我更新数据">
                     <Icon type="ios-sync" size="20" style="cursor:pointer"/>
                 </Tooltip>
             </center>
             <Divider orientation="left" style="font-size:1.2em;">个人信息</Divider>
-            <Content :style="{padding: '0 200px'}">
-                <center>
-                    <Row>
-                        <Col span="11">
-                            <p>年级：{{userData.grade}}级</p>
-                            <p>职业类型：ACM退役选手</p>                            
-                        </Col>
-                        <Col span="11">
-                            <p>学院&专业：{{userData.collage}} {{userData.major}}</p>
-                            <p>部门：竞赛部</p>
-                        </Col>
-                    </Row>
-                </center>
-            </Content>
-            <Divider orientation="left" style="font-size:1.2em;">OJ信息</Divider>
-            
-             <Row>
-                <Col span="11">
-                    <Card>
-                        <p slot="title">HDU</p>
-                        <p>{{acmData.hduId}}</p>
-                        <p>Accepted: {{acmData.hduSolve}}</p>
-                        <p>Rank: 706</p>
-                    </Card>
-                </Col>
-                <Col span="11" offset="2">
-                    <Card>
-                        <p slot="title">Codeforces</p>
-                        <p>{{acmData.codeforcesId}}</p>
-                        <p>Accepted: 365</p>
-                        <p>Ranklist: {{acmData.score}}</p>
-                    </Card>
-                </Col>
-            </Row>
-            <br>
-            <Row>
-                <Col span="11">
-                    <Card>
-                        <p slot="title">POJ</p>
-                        <p>QuanQ</p>
-                        <p>Accepted: 50</p>
-                    </Card>
-                </Col>
-                <Col span="11" offset="2">
-                    <Card>
-                        <p slot="title">VJudge</p>
-                        <p>{{acmData.vjudgeId}}</p>
-                        <p>Accepted: 189</p>
-                    </Card>
-                </Col>
-            </Row>
+                <Content :style="{padding: '0 200px'}">
+                    <center>
+                        <Row>
+                            <Col span="11">
+                                <p>年级：{{userData.grade}}级</p>
+                                <p>职业类型：ACM退役选手</p>                            
+                            </Col>
+                            <Col span="11">
+                                <p>学院&专业：{{userData.collage}} {{userData.major}}</p>
+                                <p>部门：竞赛部</p>
+                            </Col>
+                        </Row>
+                    </center>
+                </Content>
+            <div v-if="acmData != null">
+
+                <Divider orientation="left" style="font-size:1.2em;">OJ信息</Divider>
+                
+                <Row>
+                    <Col span="11">
+                        <Card>
+                            <p slot="title">HDU</p>
+                            <p>{{acmData.hduId}}</p>
+                            <p>Accepted: {{acmData.hduSolve}}</p>
+                            <p>Rank: 706</p>
+                        </Card>
+                    </Col>
+                    <Col span="11" offset="2">
+                        <Card>
+                            <p slot="title">Codeforces</p>
+                            <p>{{acmData.codeforcesId}}</p>
+                            <p>Accepted: 365</p>
+                            <p>Ranklist: {{acmData.score}}</p>
+                        </Card>
+                    </Col>
+                </Row>
+                <br>
+                <Row>
+                    <Col span="11">
+                        <Card>
+                            <p slot="title">POJ</p>
+                            <p>QuanQ</p>
+                            <p>Accepted: 50</p>
+                        </Card>
+                    </Col>
+                    <Col span="11" offset="2">
+                        <Card>
+                            <p slot="title">VJudge</p>
+                            <p>{{acmData.vjudgeId}}</p>
+                            <p>Accepted: 189</p>
+                        </Card>
+                    </Col>
+                </Row>
+            </div>
         </Content>
     </div>
 </template>
@@ -91,8 +96,12 @@ export default {
     },
     methods: {
         filterDay(time) {
+            if (this.acmData == null) {
+                return "小伙子,很遗憾你不是ACM队员,这里没有你的信息噢";
+            }
             var nowTime = Date.parse(new Date());
             let acTime = parseInt(time)
+            console.log(acTime)
             if (acTime == -1) {
                 return "哇, 你连题都没刷过来玩什么ACM";
             }
