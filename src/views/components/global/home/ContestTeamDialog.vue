@@ -15,15 +15,16 @@
             <span slot="prepend">队伍名称</span>
         </Input>
         <br>
-        <i-switch  v-model="hasPassowrd">
+        <i-switch  v-model="hasPassword">
             <Icon type="md-checkmark" slot="open"></Icon>
             <Icon type="md-close" slot="close"></Icon>
         </i-switch>
         &nbsp&nbsp&nbsp
         <Input 
-        :disabled="!hasPassowrd" 
+        :disabled="!hasPassword" 
         placeholder="如果队伍需要密码则请输入队伍密码" 
         clearable style="width: 350px" 
+        type="password"
         v-model="teamData.password"/>
         <br><br>
         注意：比赛过程中最终解释权归<b>北京师范大学珠海分校ACM协会</b>所有。
@@ -69,7 +70,7 @@ export default {
             confirmSignUp: "",
             userId: "",
             userName: "",
-            hasPassowrd: true,
+            hasPassword: true,
             teamData: {
                 password: "",
                 teamName: ""
@@ -89,19 +90,18 @@ export default {
         createTeam() {
             let team = TeamFactory.get()
             team.contestId = this.contestId
-            if (this.hasPassowrd) {
+            if (this.hasPassword) {
                 team.hasPsw = 1
                 team.password = this.teamData.password                
             } else {
                 team.hasPsw = 0
-                team.password = ""
+                team.password = null
             }
             team.teamName = this.teamData.teamName
             Request.msg(TeamApi.createTeam, [team], (ret) => {
                 this.dialogFormVisible = false
-                this.dialogIsUpdate = true
+                this.dialogIsUpdate = false
             })
-
         }
     },
     watch: {

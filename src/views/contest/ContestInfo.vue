@@ -272,12 +272,13 @@
                 if (nVal == false) {
                     this.getContestData()                    
                     this.getTeamData()
+                    this.getUserLoginStatus()    
+                    this.isUpdate = true                
                 }
             },
             showLoginDialog(nVal, oVal) {
                 if (!nVal) {
                     this.getUserLoginStatus()
-                    console.log(this.hasLogin)
                 }
             }
         },
