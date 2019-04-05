@@ -2,7 +2,7 @@
      <div>
         <Content :style="{padding: '0 200px'}">
             <h1 style="font-size: 2.5em;">
-                {{this.contestData.contestName}} {{this.contestData.style | filterContestType}}
+                {{contestData.contestName}} {{contestData.style | filterContestType}}
             </h1>
             <h2>
                 报名截止时间：{{this.contestData.signUpEndTime | filterDate}}
@@ -27,34 +27,64 @@
                         查看比赛规则
                     </button>
                 </Col>
-                <Col span="8" style="color: #ed4014; padding: 0 10px;">
-                    <h1>
-                        报名截止
-                    </h1>
-                    比赛报名已经截止，各位不用灰心，请留意下次比赛时间。
-                    如真有特殊需要请联系比赛主办方。<br>
-                    <Button type="error" style="margin-top: 20px;" disabled>
-                        报名截止
-                    </button>
-                </Col>
+                <div v-if="!hasLogin">
+                    <Col span="8" style="color: #ed4014; padding: 0 10px;">
+                        <h1>
+                            请您登录
+                        </h1>
+                        只有您登录了您的账号，您才可以报名参与本次比赛，点击登录图标快速登录。<br>
+                        <Button type="error" style="margin-top: 20px;" @click="showLoginDialog = true">
+                            登录账号
+                        </button>
+                    </Col>
+                </div>
+                <div v-if="hasLogin">
+                    <Col span="8" v-if="this.myTeamId == '' && checkContestTimeOut(this.contestData.signUpEndTime)" style="color: #ed4014; padding: 0 10px;">
+                        <h1>
+                            报名截止
+                        </h1>
+                        比赛报名已经截止，各位不用灰心，请留意下次比赛时间。
+                        如真有特殊需要请联系比赛主办方。<br>
+                        <Button type="error" style="margin-top: 20px;" disabled>
+                            报名截止
+                        </button>
+                    </Col>
+                    <Col span="8" v-if="this.myTeamId == '' && !checkContestTimeOut(this.contestData.signUpEndTime)" style="color: #ed4014; padding: 0 10px;">
+                        <h1>
+                            创建队伍
+                        </h1>
+                    下面辣么多队伍没有找到心意的队伍？不如自己来创建一支无人可敌的队伍吧<br>
+                        <Button type="error" style="margin-top: 20px;" @click="showCreateTeamDialog = true">
+                                创建队伍
+                        </Button>
+                    </Col>
+                    <Col span="8" v-if="this.myTeamId != ''" style="color: #ed4014; padding: 0 10px;">
+                        <h1>
+                            查看队伍信息
+                        </h1>
+                        想知道你队伍的组建情况？快点进来看看<br>
+                        <Button type="error" style="margin-top: 20px;" @click="showTeam(myTeamId)">
+                            查看队伍信息
+                        </Button>
+                    </Col>
+                </div>
             </Row>
             <Divider />
             <h1>已报名名单</h1><br>
             <Table border :columns="teamCol" :data="teamData" height="500"></Table>
         </Content>
-        <Drawer title="加入队伍" :closable="false" v-model="joinTeam">
-            <h3>地表最帅orz</h3>
-            <br>
-            <p>当前人数：3人（已满人）</p>
-            <p>曾庆望（1701111111）</p>
-            <p>郑景仁（1701111112）</p>
-            <p>林钰浩（1701111113）</p>
-            <br>
-            <p>备注：RE WA TLE</p>
-            <br>
-            <p><b>注意：该队伍需要密码才可进入</b></p>
-            <Input search enter-button="加入" placeholder="请输入该队伍密码" disabled/>
-        </Drawer>
+        <contest-drawer 
+        :teamId="teamId"
+        :drawerShow.sync="joinTeam"
+        :isUpdate.sync="isUpdate"
+        />
+        <contest-team-dialog 
+        :formVisible.sync="showCreateTeamDialog" 
+        :title="contestData.contestName"
+        :isUpdate.sync="isUpdate"
+        :contestId="contestData.contestId"
+        />
+        <home-login-dialog :formVisible.sync="showLoginDialog"/>                
     </div>
 </template>
 
@@ -89,27 +119,38 @@
 
 <script>
     import ContestApi from '@/http/api/Contest'
+    import TeamApi from '@/http/api/Team'
     import Request from '@/util/request_util'
     import util from '@/util/tool_util'
     export default {
         data () {
             return {
+                showCreateTeamDialog: false,
+                teamId: "",
                 joinTeam: false,
-                showTeamData: false,
                 contestData: {},
+                myTeamId: "",
+                isUpdate: false,
+                hasLogin: false,
+                showLoginDialog: false,
                 teamCol: [
                     {
-                        title: '队号',
-                        key: 'team_id'
+                        type: 'index',
+                        width: 60,
+                        align: 'center'
+                    },
+                    {
+                        title: '队伍名',
+                        key: 'teamName',
                     },
                     {
                         title: '队长名',
-                        key: 'leader_name',
+                        key: 'leaderName',
                         sortable: true,
                     },
                     {
                         title: '队伍人数',
-                        key: 'count',
+                        key: 'memberNum',                   
                         filters: [
                             {
                                 label: '已满人',
@@ -131,7 +172,7 @@
                     },
                     {
                         title: '备注',
-                        key: 'remark',
+                        key: 'comment',                   
                     },
                     {
                         title: '操作',
@@ -155,20 +196,6 @@
                             return h('div', [
                                 h('Button', {
                                     props: {
-                                        type: 'primary',
-                                        size: 'small'
-                                    },
-                                    style: {
-                                        marginRight: '5px'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            this.show(params.index)
-                                        }
-                                    }
-                                }, '查看队伍信息'),
-                                h('Button', {
-                                    props: {
                                         type: 'error',
                                         size: 'small'
                                     },
@@ -177,7 +204,7 @@
                                     },
                                     on: {
                                         click: () => {
-                                            this.changeJoinTeam(true);
+                                            this.showTeam(params.row.teamId)
                                         }
                                     }
                                 }, '加入队伍')
@@ -185,52 +212,10 @@
                         }
                     }
                 ],
-                teamData: [
-                    {
-                        team_id: 1,
-                        leader_name: 'lyt',
-                        count: 3,
-                        remark: '啦啦啦啦',
-                        need_password: 1
-                    },
-                    {
-                        team_id: 2,
-                        leader_name: 'yqqq',
-                        count: 3,
-                        remark: '啦啦啦啦',
-                        need_password: 0
-                    },
-                    {
-                        team_id: 3,
-                        leader_name: 'lyt',
-                        count: 1,
-                        remark: '啦啦啦啦',
-                        need_password: 1
-                    },
-                    {
-                        team_id: 4,
-                        leader_name: 'yqqq',
-                        count: 0,
-                        remark: '啦啦啦啦',
-                        need_password: 0
-                    },
-                    {
-                        team_id: 5,
-                        leader_name: 'lyt',
-                        count: 1,
-                        remark: '啦啦啦啦',
-                        need_password: 1
-                    },
-                    {
-                        team_id: 6,
-                        leader_name: 'yqqq',
-                        count: 1,
-                        remark: '啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦',
-                        need_password: 0
-                    }
-                ],
+                teamData: []
             }
         },
+        
         filters: {
             filterDate: util.timeFilter,
             filterContestType: function(type) {
@@ -242,22 +227,62 @@
             }
         },
         methods: {
+            showTeam(teamId) {
+                this.teamId = teamId;
+                this.isUpdate = true;
+                this.changeJoinTeam(true);
+            },
             changeJoinTeam(value) {
                 this.joinTeam = value;
             }, 
-            changeShowTeamData(value) {
-                this.showTeamData = value;
-            },
             getContestData() {
                 let id = this.$route.query.id
                 Request.msg(ContestApi.getContestDetail, [id], (ret) => {
-                    console.log(ret.data)
-                    this.contestData = ret.data
+                    this.contestData = ret.data.contest
+                    this.myTeamId = ret.data.teamId
                 })
+            },
+            checkContestTimeOut(contestTime) {
+                let nowDate = new Date()
+                let nowTime = nowDate.getTime()
+                return nowTime > contestTime
+            },
+            getTeamData() {
+                let id = this.$route.query.id
+                Request.msg(TeamApi.getTeamList, [id], (ret) => {
+                    this.teamData = ret.data.list
+                }, null, false)
+            },
+            getUserLoginStatus() {
+                setTimeout(() => {
+                    this.hasLogin = this.$store.getters.loginStatus                    
+                }, 200);
             }
         },
         created() {
             this.getContestData()
+            this.getTeamData()
+            this.getUserLoginStatus()
+        },
+        mounted() {
+            this.getUserLoginStatus()
+        },
+        watch: {
+            isUpdate(nVal, oVal) {
+                if (nVal == false) {
+                    this.getContestData()                    
+                    this.getTeamData()
+                }
+            },
+            showLoginDialog(nVal, oVal) {
+                if (!nVal) {
+                    this.getUserLoginStatus()
+                    console.log(this.hasLogin)
+                }
+            }
+        },
+        updated() {
+            this.getUserLoginStatus()
         }
     }
 </script>

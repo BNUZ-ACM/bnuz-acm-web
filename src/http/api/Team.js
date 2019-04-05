@@ -1,29 +1,26 @@
-import { formPost, formGet, jsonPost, jsonGet } from '../base/baseHattp'
+import { formPost, formGet, jsonPost } from '../base/baseHttp'
 
 class Team {
-    getTeamInfo() {
-        return formGet('/api/team/detail')
+    getTeamInfo(teamId) {
+        const data = {
+            teamId
+        }
+        return formGet('/api/team/detail', data)
     }
-    getTeamList() {
-        return formGet("/api/team/detail")
+    getTeamList(contestId) {
+        const data = {
+            contestId
+        }
+        return formGet("/api/team/list", data)
     }
     createTeam(team) {
-        const data = {
-            team
-        }
-        return jsonPost('/api/team/create', data)
+        return jsonPost('/api/team/create', team)
     }
     updateTeam(team) {
-        const data = {
-            team
-        }
-        return jsonPost('/api/team/update', data)
+        return jsonPost('/api/team/update', team)
     }
     deleteTeam(team) {
-        const data = {
-            team
-        }
-        return jsonPost('/api/team/update', team)
+        return jsonPost('/api/team/delete', team)
     }
 }
 

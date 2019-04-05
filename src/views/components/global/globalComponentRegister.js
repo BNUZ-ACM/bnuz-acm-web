@@ -2,9 +2,13 @@
 
 import HomeLoginDialog from './home/LoginDialog'
 import CourseDialog from './home/CourseDialog'
+import ContestDrawer from './home/ContestDrawer'
+import ContestTeamDialog from './home/ContestTeamDialog'
 import Vue from 'vue'
 
 export default () => {
     Vue.component('home-login-dialog', HomeLoginDialog)
     Vue.component('course-dialog', CourseDialog)
+    Vue.component('contest-drawer', ContestDrawer)
+    Vue.component('contest-team-dialog', ContestTeamDialog)
 }

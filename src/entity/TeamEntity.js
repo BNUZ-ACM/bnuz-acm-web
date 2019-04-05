@@ -13,8 +13,10 @@ class TeamEntity {
     }
 }
 
-class AtlasFactory {
+class TeamFactory {
     get(props = {}) {
         return new TeamEntity(props);
     }
 }
+
+export default new TeamFactory()

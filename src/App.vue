@@ -1,12 +1,15 @@
 <template>
-    <div id="app">
-        <div>
-            <base-nav></base-nav>
+    <div>
+        <div id="app">
+            <div>
+                <base-nav></base-nav>
+            </div>
+            <div id="nav">
+            </div>
+            <router-view title="北京师范大学珠海分校ACM协会"/>
+            <base-bottom msg="Copyright ©2018 北京师范大学珠海分校-ACM协会 "/>
+            
         </div>
-        <div id="nav">
-        </div>
-        <router-view title="北京师范大学珠海分校ACM协会"/>
-        <base-bottom msg="Copyright ©2018 北京师范大学珠海分校-ACM协会 "/>
     </div>
 </template>
 
@@ -50,6 +53,6 @@ export default {
     components: {
         BaseNav,
         BaseBottom
-    }    
+    }
 }
 </script>

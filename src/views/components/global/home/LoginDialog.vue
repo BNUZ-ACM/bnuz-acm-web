@@ -17,9 +17,10 @@
       </Form>
     </div>
     <div slot="footer">
-        <Button type="error" size="large" @click="login">登录</Button>
+        <Button type="error" size="large" @click="login" @keyup.enter.native="login">登录</Button>
         <Button type="default" size="large" @click="dialogFormVisible = false">取消</Button>
     </div>
+    <Spin fix size="large" v-if="isSpinShow"></Spin>
   </Modal>
 </template>
 <script>
@@ -43,6 +44,7 @@ export default {
   },
   data () {
     return {
+        isSpinShow: false,
         isPromptShow: false,
         errorMessage: '',
         formValidate: {
@@ -63,16 +65,21 @@ export default {
     async login() {
       // const data = await login(this.formValidate.username, this.formValidate.password);
       // console.log(data)
+      this.isSpinShow = true
       Request.msg(login, [this.formValidate.username, this.formValidate.password], (ret) => {
         // 登录成功塞token
-        this.closeDialog();
         this.$store.commit("login", ret.data);
         localStorage.setItem("token", ret.data);
+        this.closeDialog();
         UserApi.getInfo().then((ret) => {
-          console.log(ret)
           this.$store.commit("setUser", ret.data);
+          this.isSpinShow = false
           // this.$router.push({ path: "/" });
+        }, (ret) => {
+          this.isSpinShow = false
         })
+      }, (ret) => {
+        this.isSpinShow = false
       })
     },
     closeDialog() {
@@ -80,6 +87,15 @@ export default {
       this.formValidate.password = '';
       this.dialogFormVisible = false;
       this.isPromptShow = false;
+    }
+  },
+  watch: {
+    dialogFormVisible(nVal, oVal) {
+      if (nVal) {
+        if (this.$store.getters.loginStatus) {
+          this.dialogFormVisible = false
+        }
+      }
     }
   }
 }

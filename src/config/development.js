@@ -10,7 +10,7 @@ export default Object.assign({}, default_config, {
     // http server config
     http: {
         prot: 'http',
-        host: '192.168.1.103',
+        host: 'localhost',
         port: '8080',
         preUrl: '/api'
     }

@@ -56,7 +56,6 @@ async function msg(target, params = [], sucCallback = null, errCallback = null, 
             await sucCallback(ret);
         }
     }, (err) => {
-        console.log(err)
         Message.error(err.errorMsg);
         if (errCallback != null && typeof errCallback === 'function') {
             errCallback(err);
