@@ -10,8 +10,8 @@
         <br>
         <Divider orientation="left" class="drawer-content-md">队员们</Divider>
         
-        <p v-for="competitor in competitorList" :key="competitor.compId" class="drawer-content">
-            {{competitor.nickName}} ({{competitor.userId}})
+        <p v-for="(competitor, index) in competitorList" :key="competitor.compId" class="drawer-content">
+            {{competitor.nickName}} ({{competitor.userId}}) <Button v-if="index != 0 && relation == 1" type="warning" size="small">移除队员</Button>
         </p>
         <br>
         <p v-if="teamData.comment != null && teamData.comment != ''">队伍备注：{{teamData.comment}}</p>
@@ -30,7 +30,7 @@
         <div v-if="teamData.hasPsw == 0">
             <Input search enter-button="加入" placeholder="嘻嘻我们队不需要密码噢" disabled/>
         </div>
-        <div>
+        <div v-if="relation == 1">
             <Divider orientation="left" class="drawer-content-md">设置队伍信息</Divider>
             <Input
                 v-model="updateTeamData.teamName">
@@ -51,8 +51,15 @@
             <br><br>
             <center>
                 <Button type="info" @click="updateTeam()">更改队伍信息</Button>
-                <Button style="margin-left: 20px" type="error" @click="deleteTeam()">删除队伍</Button>
+                <Button style="margin-left: 20px" type="error" @click="confirm(confirmMap.deleteTeam)">删除队伍</Button>
             </center>
+        </div>
+        <div v-if="relation == 2">
+            <Divider orientation="left" class="drawer-content-md">队伍操作</Divider>
+            <center>
+            <Button type="error" @click="confirm(confirmMap.cancelTeam)" long>退出队伍</Button>
+            </center>
+            <br>
         </div>
         <home-login-dialog :formVisible.sync="showLoginDialog"/>        
     </Drawer>
@@ -80,7 +87,7 @@ export default {
     props: {
         teamId: "",
         drawerShow: false, 
-        isUpdate: false,
+        isUpdate: 0,
         showLoginDialog: false,
     },
     data() {
@@ -95,6 +102,26 @@ export default {
             updateTeamData: {
                 password: "",
                 teamName: ""
+            },
+            confirmMap: {
+                removeTeamMember: {
+                    title: "移除队员",
+                    content: "你真的不是手误吗，忍心把这么可爱的队友踢出队伍orz",
+                    cancelMessage: "嘻嘻，我就知道你是手误",
+                    confirmFunc: this.removeTeamMember
+                },
+                cancelTeam: {
+                    title: "退出队伍",
+                    content: "你就这么忍心离开你可爱的队友们嘛，不跟他们一起奋战到底吗？",
+                    cancelMessage: "我代表你队友们爱你噢~",
+                    confirmFunc: this.cancelTeam
+                },
+                deleteTeam: {
+                    title: "解散队伍",
+                    content: "你确定你要让队友们无家可归吗，呜呜",
+                    cancelMessage: "恩，手误了，真香",
+                    confirmFunc: this.deleteTeam
+                }
             }
         }
     },
@@ -127,7 +154,7 @@ export default {
         joinTeam(password) {
             Request.msg(CompetitorApi.signUpTeam, [this.teamId, password], (ret) => {
                 this.password = ""
-                this.drawerIsUpdate = false
+                this.drawerIsUpdate = this.drawerIsUpdate + 1
             }, (ret) => {
                 // 如果没登录拉起登录框
                 if (ret.errorCode == 401) {
@@ -146,19 +173,48 @@ export default {
                 team.hasPsw = 0
                 team.password = null
             }
-            console.log(team)
             Request.msg(TeamApi.updateTeam, [team], (ret) => {
                 this.updateTeamData.password = ""
-                this.drawerIsUpdate = false
+                this.drawerIsUpdate = this.drawerIsUpdate + 1
             })
         },
         deleteTeam() {
             let teamId = this.teamId
             Request.msg(TeamApi.deleteTeam, [teamId], (ret) => {
-                this.drawerIsUpdate = false
+                this.drawerIsUpdate = this.drawerIsUpdate + 1
                 this.drawerShowControl = false
+                this.drawerTeamId = ""
             }) 
-        }
+        },
+        cancelTeam() {
+            let teamId = this.teamId
+            Request.msg(CompetitorApi.cancelTeam, [teamId], (ret) => {
+                this.drawerIsUpdate = this.drawerIsUpdate + 1
+                this.drawerShowControl = false
+                this.drawerTeamId = ""
+            })
+        },
+        removeTeamMember(compId) {
+            Request.msg(TeamApi.removeTeamMember, [compId], (ret) => {
+                this.drawerIsUpdate = this.drawerIsUpdate + 1
+            })
+        },
+        confirm(confirmType, params = []) {
+            var confirmData = confirmType
+            this.$Modal.confirm({
+                title: confirmData.title,
+                content: confirmData.content,
+                onOk: () => {
+                    console.log("====")
+                    if (confirmData.confirmFunc != null) {
+                        confirmData.confirmFunc(...params)
+                    }
+                },
+                onCancel: () => {
+                    this.$Message.info(confirmData.cancelMessage);
+                }
+            });
+        },
     },
     computed: {
         drawerShowControl: {
@@ -176,13 +232,24 @@ export default {
             set: function(value) {
                 this.$emit('update:isUpdate', value);
             }
+        },
+        drawerTeamId: {
+            get: function() {
+                return this.teamId
+            },
+            set: function(value) {
+                this.$emit('update:teamId', value)
+            }
         }
     },
     watch: {
         isUpdate(nVal, oVal) {
-            if (nVal == true) {
-                this.initUserData()
-                this.getTeamData()
+            this.initUserData()
+            this.getTeamData()
+        },
+        drawerShowControl(nVal, oVal) {
+            if (nVal == false) {
+                this.password = ""
             }
         }
     }

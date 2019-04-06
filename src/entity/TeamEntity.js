@@ -1,9 +1,9 @@
 class TeamEntity {
     constructor(props) {
-        this.contestId = "";
-        this.teamName = "";
+        this.contestId = null;
+        this.teamName = null;
         this.hasPsw = 0;
-        this.password = "";
+        this.password = null;
     }
     set(props) {
         Object.assign(this, props);

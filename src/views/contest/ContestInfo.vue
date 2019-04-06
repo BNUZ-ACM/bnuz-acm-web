@@ -54,7 +54,7 @@
                             创建队伍
                         </h1>
                     下面辣么多队伍没有找到心意的队伍？不如自己来创建一支无人可敌的队伍吧<br>
-                        <Button type="error" style="margin-top: 20px;" @click="showCreateTeamDialog = true">
+                        <Button type="error" style="margin-top: 20px;" @click="showCreateTimeDialog()">
                                 创建队伍
                         </Button>
                     </Col>
@@ -74,7 +74,7 @@
             <Table border :columns="teamCol" :data="teamData" height="500"></Table>
         </Content>
         <contest-drawer 
-        :teamId="teamId"
+        :teamId.sync="teamId"
         :drawerShow.sync="joinTeam"
         :isUpdate.sync="isUpdate"
         />
@@ -130,7 +130,7 @@
                 joinTeam: false,
                 contestData: {},
                 myTeamId: "",
-                isUpdate: false,
+                isUpdate: 0,
                 hasLogin: false,
                 showLoginDialog: false,
                 teamCol: [
@@ -227,10 +227,15 @@
             }
         },
         methods: {
+            showCreateTimeDialog() {
+                this.isUpdate = this.isUpdate + 1
+                this.showCreateTeamDialog = true
+            },
             showTeam(teamId) {
-                this.teamId = teamId;
-                this.isUpdate = true;
-                this.changeJoinTeam(true);
+                this.teamId = teamId
+                this.isUpdate = this.isUpdate + 1
+
+                this.changeJoinTeam(true)
             },
             changeJoinTeam(value) {
                 this.joinTeam = value;
@@ -240,7 +245,7 @@
                 Request.msg(ContestApi.getContestDetail, [id], (ret) => {
                     this.contestData = ret.data.contest
                     this.myTeamId = ret.data.teamId
-                })
+                }, null, false)
             },
             checkContestTimeOut(contestTime) {
                 let nowDate = new Date()
@@ -269,12 +274,9 @@
         },
         watch: {
             isUpdate(nVal, oVal) {
-                if (nVal == false) {
-                    this.getContestData()                    
-                    this.getTeamData()
-                    this.getUserLoginStatus()    
-                    this.isUpdate = true                
-                }
+                this.getContestData()                    
+                this.getTeamData()
+                this.getUserLoginStatus()
             },
             showLoginDialog(nVal, oVal) {
                 if (!nVal) {

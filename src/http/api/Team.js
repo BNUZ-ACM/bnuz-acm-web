@@ -23,7 +23,13 @@ class Team {
         const data = {
             teamId
         }
-        return formGet('/api/team/delete', data)
+        return formPost('/api/team/delete', data)
+    }
+    removeTeamMember(compId) {
+        const data = {
+            compId
+        }
+        return formPost('api/team/removeTeamMember', data)
     }
 }
 

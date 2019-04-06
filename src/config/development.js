@@ -10,8 +10,8 @@ export default Object.assign({}, default_config, {
     // http server config
     http: {
         prot: 'http',
-        host: 'localhost',
-        port: '8080',
+        host: 'tt6hmk.natappfree.cc',
+        port: '80',
         preUrl: '/api'
     }
 })

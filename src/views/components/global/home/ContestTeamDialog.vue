@@ -31,7 +31,7 @@
     </div>
     <div slot="footer">
         <div><Button type="error" @click="createTeam()">创建队伍</Button>
-        <Button type="default" @click="dialogFormVisible = false">取消</Button></div>
+        <Button type="default" @click="closeDialog()">取消</Button></div>
     </div>
   </Modal>
 </template>
@@ -44,7 +44,7 @@ export default {
     props: {
         formVisible: false,
         title: "",
-        isUpdate: false,
+        isUpdate: 0,
         contestId: "",        
     },
     computed: {
@@ -85,7 +85,8 @@ export default {
         },
         closeDialog() {
             this.dialogFormVisible = false;
-            this.isPromptShow = false;
+            this.teamData.password = ""
+            this.teamData.teamName = ""
         },
         createTeam() {
             let team = TeamFactory.get()
@@ -99,8 +100,8 @@ export default {
             }
             team.teamName = this.teamData.teamName
             Request.msg(TeamApi.createTeam, [team], (ret) => {
-                this.dialogFormVisible = false
-                this.dialogIsUpdate = false
+                this.dialogIsUpdate = this.dialogIsUpdate + 1
+                this.closeDialog()
             })
         }
     },
