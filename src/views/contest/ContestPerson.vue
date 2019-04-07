@@ -58,22 +58,22 @@
                         </button>
                     </Col>
                     <div v-if="hasLogin">
-                        <Col span="8" v-if="this.myTeamId == ''" style="color: #ed4014; padding: 0 10px;">
+                        <Col span="8" v-if="this.myCompId == ''" style="color: #ed4014; padding: 0 10px;">
                             <h1>
-                                创建队伍
+                                快速报名
                             </h1>
-                        下面辣么多队伍没有找到心意的队伍？不如自己来创建一支无人可敌的队伍吧<br>
-                            <Button type="error" style="margin-top: 20px;" @click="showCreateTimeDialog()">
-                                    创建队伍
+                            还想参加比赛？只要你满足规则和在报名截止前，都能报名，点击下面按钮快速报名<br>
+                            <Button type="error" style="margin-top: 20px;" @click="showSignUpDialogFunc()">
+                                    快速报名
                             </Button>
                         </Col>
-                        <Col span="8" v-if="this.myTeamId != ''" style="color: #ed4014; padding: 0 10px;">
+                        <Col span="8" v-if="this.myCompId != ''" style="color: #ed4014; padding: 0 10px;">
                             <h1>
-                                查看队伍信息
+                                更改信息
                             </h1>
-                            想知道你队伍的组建情况？快点进来看看<br>
-                            <Button type="error" style="margin-top: 20px;" @click="showTeam(myTeamId)">
-                                查看队伍信息
+                            贪心的你还想改名字？没问题，快改一个能称霸全榜的名字<br>
+                            <Button type="error" style="margin-top: 20px;"  @click="showUpdateDialogFunc()">
+                                更改信息
                             </Button>
                         </Col>
                     </div>
@@ -81,121 +81,77 @@
             </Row>
             <Divider />
             <h1>已报名名单</h1><br>
-            <Table border :columns="teamCol" :data="teamData" no-data-text="暂时没有队伍报名噢"></Table>
+            <Table border :columns="personalCol" :data="personalList" no-data-text="暂时没有小老哥报名噢"></Table>
         </Content>
-        <contest-drawer 
-        :teamId.sync="teamId"
-        :drawerShow.sync="joinTeam"
-        :isUpdate.sync="isUpdate"
-        />
-        <contest-team-dialog 
-        :formVisible.sync="showCreateTeamDialog" 
-        :title="contestData.contestName"
-        :isUpdate.sync="isUpdate"
-        :contestId="contestData.contestId"
-        />
         <home-login-dialog 
         :isUpdate.sync="isUpdate"        
-        :formVisible.sync="showLoginDialog"/>                
+        :formVisible.sync="showLoginDialog"/> 
+        <contest-personal-dialog
+        :contestId="contestId"
+        :isUpdate.sync="isUpdate"   
+        :formVisible.sync="showSignUpDialog"
+        :personalData="personalUpdateData"
+        />
     </div>
 </template>
 
 <script>
     import ContestApi from '@/http/api/Contest'
-    import TeamApi from '@/http/api/Team'
+    import CompetitorApi from '@/http/api/Competitor'
     import Request from '@/util/request_util'
     import util from '@/util/tool_util'
+    import { Message } from 'iview'
     export default {
         data () {
             return {
-                showCreateTeamDialog: false,
-                teamId: "",
-                joinTeam: false,
+                isSuccess: false,
+                contestId: "",
                 contestData: {},
-                myTeamId: "",
+                myCompId: "",
                 isUpdate: 0,
                 hasLogin: false,
                 showLoginDialog: false,
-                teamCol: [
+                showSignUpDialog: false,
+                personalCol: [
                     {
                         type: 'index',
                         width: 60,
                         align: 'center'
                     },
                     {
-                        title: '队伍名',
-                        key: 'teamName',
+                        title: '学号',
+                        key: 'userId',
+                        sortable: true,                        
                     },
                     {
-                        title: '队长名',
-                        key: 'leaderName',
-                        sortable: true,
+                        title: '名字',
+                        key: 'username',
                     },
                     {
-                        title: '队伍人数',
-                        key: 'memberNum',                   
-                        filters: [
-                            {
-                                label: '已满人',
-                                value: 1
-                            },
-                            {
-                                label: '待加入',
-                                value: 2
-                            }
-                        ],
-                        filterMultiple: false,
-                        filterMethod (value, row) {
-                            if (value === 1) {
-                                return row.count == 3;
-                            } else if (value === 2) {
-                                return row.count != 3;
-                            }
-                        }
+                        title: '昵称',
+                        key: 'nickName', 
                     },
                     {
                         title: '备注',
-                        key: 'comment',                   
-                    },
-                    {
-                        title: '操作',
-                        key: 'option',
-                        fixed: 'right',
-                        filters: [
-                            {
-                                label: '不需要密码',
-                                value: 1
-                            }
-                        ],
-                        filterMultiple: false,
-                        filterMethod (value, row) {
-                            if (value === 1) {
-                                return row.need_password != 1;
-                            }
-                        },
-                        width: 200,
-                        align: 'center',
-                        render: (h, params) => {
-                            return h('div', [
-                                h('Button', {
-                                    props: {
-                                        type: 'error',
-                                        size: 'small'
-                                    },
-                                    style: {
-                                        marginRight: '5px',
-                                    },
-                                    on: {
-                                        click: () => {
-                                            this.showTeam(params.row.teamId)
-                                        }
-                                    }
-                                }, '加入队伍')
-                            ]);
-                        }
+                        key: 'comment',
                     }
                 ],
-                teamData: []
+                personalList: [],
+                personalUpdateData: {},
+                personalUpdateDataList: {
+                    create: {
+                        title: "报名比赛",
+                        confirmButtonContent: "报名比赛",
+                        confirmButton: this.signUpPersonal,
+                        type: 0,
+                    },
+                    update: {
+                        title: "更新信息",
+                        confirmButtonContent: "更新信息",
+                        confirmButton: this.updatePersonal,
+                        type: 1,
+                    }
+                }
             }
         },
         
@@ -210,24 +166,12 @@
             }
         },
         methods: {
-            showCreateTimeDialog() {
-                this.isUpdate = this.isUpdate + 1
-                this.showCreateTeamDialog = true
-            },
-            showTeam(teamId) {
-                this.teamId = teamId
-                this.isUpdate = this.isUpdate + 1
-
-                this.changeJoinTeam(true)
-            },
-            changeJoinTeam(value) {
-                this.joinTeam = value;
-            }, 
             getContestData() {
                 let id = this.$route.query.id
                 Request.msg(ContestApi.getContestDetail, [id], (ret) => {
+                    console.log(ret)                    
                     this.contestData = ret.data.contest
-                    this.myTeamId = ret.data.teamId
+                    this.myCompId = ret.data.compId
                 }, null, false)
             },
             checkContestTimeOut(contestTime) {
@@ -235,31 +179,69 @@
                 let nowTime = nowDate.getTime()
                 return nowTime > contestTime
             },
-            getTeamData() {
+            getListPersonal() {
                 let id = this.$route.query.id
-                Request.msg(TeamApi.getTeamList, [id], (ret) => {
-                    this.teamData = ret.data.list
+                Request.msg(CompetitorApi.getListPersonal, [id], (ret) => {
+                    this.personalList = ret.data.list
                 }, null, false)
             },
             getUserLoginStatus() {
                 setTimeout(() => {
                     this.hasLogin = this.$store.getters.loginStatus
                 }, 200);
+            },
+            signUpPersonal(competitor) {
+                let check = util.checkName(competitor.nickName, 0)                
+                this.isSuccess = true
+                if (check != '') {
+                    Message.error(check)
+                    this.isSuccess = false
+                } else {
+                    Request.msg(CompetitorApi.signUpPersonal, [competitor], null, (ret) => {
+                        this.isSuccess = false
+                    })
+                }
+                return this.isSuccess
+            },
+            updatePersonal(competitor) {
+                let check = util.checkName(competitor.nickName, 0)
+                this.isSuccess = true
+                if (check != '') {
+                    Message.error(check)
+                    this.isSuccess = false                    
+                } else {
+                    Request.msg(CompetitorApi.updatePersonal, [competitor], null, (ret) => {
+                        this.isSuccess = false
+                    })
+                }
+                return this.isSuccess
+            },
+            showUpdateDialogFunc() {
+                this.personalUpdateData = this.personalUpdateDataList.update
+                this.showSignUpDialog = true
+            },
+            showSignUpDialogFunc() {
+                this.personalUpdateData = this.personalUpdateDataList.create
+                this.showSignUpDialog = true
             }
         },
         created() {
             this.getContestData()
-            this.getTeamData()
+            this.getListPersonal()
             this.getUserLoginStatus()
+            this.contestId = this.$route.query.id
         },
         mounted() {
             this.getUserLoginStatus()
         },
         watch: {
             isUpdate(nVal, oVal) {
-                this.getContestData()                    
-                this.getTeamData()
-                this.getUserLoginStatus()
+                setTimeout(() => {
+                    this.getContestData()
+                    this.getUserLoginStatus()
+                    this.getListPersonal()
+                }, 200);
+                
             },
             showLoginDialog(nVal, oVal) {
                 if (!nVal) {

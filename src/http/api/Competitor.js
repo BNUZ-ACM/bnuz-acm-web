@@ -1,11 +1,8 @@
-import { formPost, formGet } from '../base/baseHttp'
+import { formPost, formGet, jsonPost } from '../base/baseHttp'
 
 class Competitor {
     signUpPersonal(competitor) {
-        const data = {
-            competitor
-        }
-        return formPost('/api/competitor/signUpPersonal', data)
+        return jsonPost('/api/competitor/signUpPersonal', competitor)
     }
     cancelPersonal(contestId) {
         const data = {
@@ -25,6 +22,21 @@ class Competitor {
             teamId
         }
         return formPost('/api/competitor/cancelTeam', data)
+    }
+    getListPersonal(contestId) {
+        const data = {
+            contestId
+        }
+        return formGet('/api/competitor/listPersonal', data)
+    }
+    getUserCompetitorInfo(contestId) {
+        const data = {
+            contestId
+        }
+        return formGet('/api/competitor/getUserCompetitorInfo', data)
+    }
+    updatePersonal(competitor) {
+        return jsonPost('/api/competitor/updatePersonal', competitor)
     }
 }
 

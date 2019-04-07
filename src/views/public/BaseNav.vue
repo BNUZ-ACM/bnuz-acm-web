@@ -48,7 +48,7 @@
           </template>
           <MenuItem name="6" to="/personal/center">个人中心</MenuItem>
           <MenuItem name="3-2">
-            <div  @click="logout">
+            <div @click="logout">
               退出登录
             </div>
           </MenuItem> 

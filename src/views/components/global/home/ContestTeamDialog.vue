@@ -135,6 +135,7 @@ export default {
                 // 如果没有登录关闭当前窗口打开登录框
                 if (!this.$store.getters.loginStatus) {
                     this.dialogFormVisible = false
+                    return 
                 }
                 this.initUserData()
             }

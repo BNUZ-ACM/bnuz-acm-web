@@ -72,7 +72,6 @@ export default {
   },
   methods: {
     validateLoginForm(data) {
-      console.log(data)
       if (data.username == '' || data.username == null) {
         return this.ruleValidate.username[0].message
       }
@@ -88,7 +87,6 @@ export default {
     async login() {
       let checkLoginFormMsg = this.validateLoginForm(this.formValidate)
       if (checkLoginFormMsg != '') {
-        console.log(checkLoginFormMsg)
         Message.error(checkLoginFormMsg)
         return 
       }

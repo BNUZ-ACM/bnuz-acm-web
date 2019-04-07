@@ -88,7 +88,7 @@ export default {
     data() {
         return {
             color: "#00a2ae",
-            acmData: {},
+            acmData: null,
             userData: {},
             thisYear: 2019,
             section: ['无业游民', '组织部', '技术部', '宣传部', '竞赛部']
@@ -99,13 +99,13 @@ export default {
     },
     methods: {
         filterSection(type) {
-            if (type > 4) {
+            if (type > 4 || type == null || !Number.isInteger(type)) {
                 type = 0
             }
             return this.section[type]
         },
         filterDay(time) {
-            if (this.acmData == null || typeof(time) != "undefined") {
+            if (this.acmData == null || typeof(time) != "undefined" || time == null) {
                 return "小伙子,很遗憾你不是ACM队员,这里没有你的信息噢";
             }
             let nowTime = new Date();
@@ -120,7 +120,7 @@ export default {
                 return "小懒虫你已经" + lastAcTime + "天没有ac了，快要成咸鱼了噢！"
             }
         },
-        async getAcmInfo() {
+        getAcmInfo() {
             Request.msg(ACMerApi.getMyACMerInfo, [], (ret) => {
                 this.acmData = ret.data
             }, null, false)
@@ -128,7 +128,7 @@ export default {
         getUserInfo() {
             Request.msg(UserApi.getInfo, [], (ret) => {
                 this.userData = ret.data
-            })
+            }, null, false)
         },
         initData() {
             let nowTime = new Date();
