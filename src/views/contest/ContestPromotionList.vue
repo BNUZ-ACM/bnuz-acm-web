@@ -4,7 +4,8 @@
         <Content :style="{padding: '0 200px'}">
             <Breadcrumb>
                 <BreadcrumbItem to="/contest/list"><Icon type="ios-home-outline" /> 赛事列表</BreadcrumbItem>
-                <BreadcrumbItem :to="{path:'/contest/info', query:{id:contestData.contestId}}"><Icon type="ios-jet-outline" /> {{contestData.contestName}}</BreadcrumbItem>
+                <BreadcrumbItem v-if="contestData.style === 1" :to="{path:'/contest/info', query:{id:contestData.contestId}}"><Icon type="ios-jet-outline" /> {{contestData.contestName}}</BreadcrumbItem>
+                <BreadcrumbItem v-if="contestData.style === 0" :to="{path:'/contest/personal', query:{id:contestData.contestId}}"><Icon type="ios-jet-outline" /> {{contestData.contestName}}</BreadcrumbItem>                
                 <BreadcrumbItem><Icon type="ios-paper-plane" /> 晋级名单</BreadcrumbItem>
             </Breadcrumb>
             <br>

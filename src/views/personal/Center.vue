@@ -105,12 +105,11 @@ export default {
             return this.section[type]
         },
         filterDay(time) {
-            if (this.acmData == null) {
+            if (this.acmData == null || typeof(time) != "undefined") {
                 return "小伙子,很遗憾你不是ACM队员,这里没有你的信息噢";
             }
-            let nowTime = Date.parse(new Date());
+            let nowTime = new Date();
             let acTime = parseInt(time)
-            console.log(acTime)
             if (acTime == -1) {
                 return "哇, 你连题都没刷过来玩什么ACM";
             }
@@ -124,18 +123,16 @@ export default {
         async getAcmInfo() {
             Request.msg(ACMerApi.getMyACMerInfo, [], (ret) => {
                 this.acmData = ret.data
-                console.log(this.acmData)
             }, null, false)
         },
         getUserInfo() {
             Request.msg(UserApi.getInfo, [], (ret) => {
                 this.userData = ret.data
-                console.log(this.userData)
             })
         },
         initData() {
-            let nowTime = Date.parse(new Date());
-            this.thisYear = nowTime.getFUllYear()
+            let nowTime = new Date();
+            this.thisYear = nowTime.getFullYear()
         }
     },
     created() {

@@ -49,7 +49,6 @@
     methods: {
       async getCourseList() {
         Request.msg(CourseApi.getCourseList, [], (ret) => {
-          console.log(ret)
           this.courseList = ret.data.list
         }, null, false)
       },

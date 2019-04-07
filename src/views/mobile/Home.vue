@@ -14,7 +14,6 @@ export default {
         getRandomInt(max) {
             let range = max;
             let rand = Math.random();
-            console.log((Math.round(rand * range)))
             return Math.round(rand * range);
         },
         getMobile500Photo() {

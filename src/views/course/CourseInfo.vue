@@ -101,7 +101,6 @@ export default {
                     filterMethod(value, row) {
                         const senior = [1010000, 1030000, 1040000, 1050000, 1090000];
                         let id = parseInt(row.userId) % 10000000
-                        console.log(id)
                         for (let i = 0; i < 4; i++) {
                             if (senior[i] <= id && id < senior[i + 1]) {
                                 return i + 1 === value
@@ -123,13 +122,11 @@ export default {
     methods: {
         getScholarList() {
             Request.msg(ScholarApi.getScholarListByID, [this.$route.query.id], (ret) => {
-                console.log(ret.data.list)
                 this.scholarList = ret.data.list
             }, null, false)
         },
         getCourseInfo() {
             Request.msg(CourseApi.getCourseByID, [this.$route.query.id], (ret) => {
-                console.log(ret.data)
                 this.courseInfo = ret.data
             }, null, false)
         },

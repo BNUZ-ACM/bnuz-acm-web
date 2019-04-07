@@ -5,6 +5,7 @@ import ContestList from './views/contest/ContestList'
 import ContestPromotionList from './views/contest/ContestPromotionList'
 import ContestInfo from './views/contest/ContestInfo'
 import ContestDetail from './views/contest/ContestDetail.vue'
+import ContestPersonal from './views/contest/ContestPerson'
 import SchoolTeam from './views/crews/SchoolTeam'
 import ACMDetail from './views/acm/Detail.vue'
 import ACMRole from './views/acm/Role.vue'
@@ -43,6 +44,14 @@ export default new Router({
             path: '/contest/info',
             name: 'contestInfo',
             component: ContestInfo,
+            meta: {
+                title: '比赛详情'
+            }
+        },
+        {
+            path: '/contest/personal',
+            name: 'ContestPersonal',
+            component: ContestPersonal,
             meta: {
                 title: '比赛详情'
             }

@@ -79,7 +79,6 @@ export default {
     isLogin: {
       get: function() {
         this.$store.dispatch("isLogin");
-        console.log(this.$store.getters)
         this.username = this.$store.getters.username;
         return this.$store.getters.loginStatus;
       }

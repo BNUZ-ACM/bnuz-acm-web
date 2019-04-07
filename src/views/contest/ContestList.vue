@@ -7,7 +7,7 @@
           <Col span="6"><img style="width: 80%; margin: 0 auto;" src="../../assets/contest-logo.png"></Col>
           <Col span="12">
             <div style="text-align: left;">
-              <h2>{{contest.contestName}} {{contest.stlye | filterContestType}}</h2>
+              <h2>{{contest.contestName}} {{contest.style | filterContestType}}</h2>
               <Divider class="line-margin"/>
               <div>
                 {{contest.comment}}
@@ -21,8 +21,11 @@
               <p> <Icon :size="20" type="ios-people" />已报名人数：{{contest.signUpNum}}人</p>
               <p> <Icon :size="20" type="md-timer" />持续时间：{{getCorrectCompetitionTime(contest.contestStartTime, contest.contestEndTime)}}</p>
               <br>
-              <router-link :to="{path:'/contest/info', query:{id:contest.contestId}}">
-              <Button type="success" style="margin-bottom:20px;">查看详情</Button>
+              <router-link v-if="contest.style === 1" :to="{path:'/contest/info', query:{id:contest.contestId}}">
+                <Button type="success" style="margin-bottom:20px;">查看详情</Button>
+              </router-link>
+              <router-link v-if="contest.style === 0" :to="{path:'/contest/personal', query:{id:contest.contestId}}">
+                <Button type="success" style="margin-bottom:20px;">查看详情</Button>
               </router-link>
             </div>
           </Col>
@@ -57,7 +60,6 @@
     methods: {
       async getContestList() {
         Request.msg(ContestApi.getContestList, [], (ret) => {
-          console.log(ret)
           this.contestList = ret.data.list
         }, null, false)
       },
