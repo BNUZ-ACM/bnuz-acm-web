@@ -1,12 +1,7 @@
 <template>
     <div>
         <div id="app">
-            <div>
-                <base-nav></base-nav>
-            </div>
-            <div id="nav">
-            </div>
-            <router-view title="北京师范大学珠海分校ACM协会"/>
+            <router-view/>
             <base-bottom msg="Copyright ©2018 北京师范大学珠海分校-ACM协会 "/>
             
         </div>
@@ -21,7 +16,7 @@
   /* text-align: center; */
   color: #2c3e50;
   background: url('./assets/background.png') ;
-  /* background-repeat: repeat; */
+  background-repeat: repeat;
   /* height: 100%; */
 }
 html,body{
@@ -30,17 +25,6 @@ html,body{
     margin: 0;
     padding: 0;
     font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
-}
-#nav {
-  padding: 30px;
-}
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
 }
 </style>
 
@@ -51,8 +35,20 @@ import BaseBottom from './views/public/BaseBottom.vue';
 
 export default {
     components: {
-        BaseNav,
         BaseBottom
+    },
+    methods: {
+        _isMobile() {
+            let flag = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
+            return flag;
+        }
+    },
+    mounted() {
+        if (this._isMobile()) {
+            this.$router.replace('/mobile/');
+        } else {
+            this.$router.replace('/');
+        }
     }
 }
 </script>

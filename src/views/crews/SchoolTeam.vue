@@ -1,6 +1,6 @@
 <template>
     <div>
-        
+        <base-nav style="margin-bottom: 30px;"></base-nav>        
         <Content :style="{padding: '0 200px'}">
             
             <h1 class="big-title">

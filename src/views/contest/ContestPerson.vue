@@ -1,6 +1,7 @@
 <template>
      <div>
         <base-nav style="margin-bottom: 30px;"></base-nav>
+
         <Content :style="{padding: '0 200px'}">
             <Breadcrumb>
                 <BreadcrumbItem to="/contest/list"><Icon type="ios-home-outline" /> 赛事列表</BreadcrumbItem>
@@ -37,18 +38,8 @@
                         </button>
                     </router-link>
                 </Col>
-                <Col span="8" v-if="checkContestTimeOut(this.contestData.signUpEndTime)" style="color: #ed4014; padding: 0 10px;">
-                    <h1>
-                        报名截止
-                    </h1>
-                    比赛报名已经截止，各位不用灰心，请留意下次比赛时间。
-                    如真有特殊需要请联系比赛主办方。<br>
-                    <Button type="error" style="margin-top: 20px;" disabled>
-                        报名截止
-                    </button>
-                </Col>
-                <div v-if="!checkContestTimeOut(this.contestData.signUpEndTime)">
-                    <Col span="8" v-if="!hasLogin" style="color: #ed4014; padding: 0 10px;">
+                <div v-if="!hasLogin">
+                    <Col span="8" style="color: #ed4014; padding: 0 10px;">
                         <h1>
                             请您登录
                         </h1>
@@ -57,26 +48,36 @@
                             登录账号
                         </button>
                     </Col>
-                    <div v-if="hasLogin">
-                        <Col span="8" v-if="this.myTeamId == ''" style="color: #ed4014; padding: 0 10px;">
-                            <h1>
+                </div>
+                <div v-if="hasLogin">
+                    <Col span="8" v-if="checkContestTimeOut(this.contestData.signUpEndTime)" style="color: #ed4014; padding: 0 10px;">
+                        <h1>
+                            报名截止
+                        </h1>
+                        比赛报名已经截止，各位不用灰心，请留意下次比赛时间。
+                        如真有特殊需要请联系比赛主办方。<br>
+                        <Button type="error" style="margin-top: 20px;" disabled>
+                            报名截止
+                        </button>
+                    </Col>
+                    <Col span="8" v-if="!hasRegister && !checkContestTimeOut(this.contestData.signUpEndTime)" style="color: #ed4014; padding: 0 10px;">
+                        <h1>
+                            报名比赛
+                        </h1>
+                    下面辣么多队伍没有找到心意的队伍？不如自己来创建一支无人可敌的队伍吧<br>
+                        <Button type="error" style="margin-top: 20px;" @click="showCreateTimeDialog()">
                                 创建队伍
-                            </h1>
-                        下面辣么多队伍没有找到心意的队伍？不如自己来创建一支无人可敌的队伍吧<br>
-                            <Button type="error" style="margin-top: 20px;" @click="showCreateTimeDialog()">
-                                    创建队伍
-                            </Button>
-                        </Col>
-                        <Col span="8" v-if="this.myTeamId != ''" style="color: #ed4014; padding: 0 10px;">
-                            <h1>
-                                查看队伍信息
-                            </h1>
-                            想知道你队伍的组建情况？快点进来看看<br>
-                            <Button type="error" style="margin-top: 20px;" @click="showTeam(myTeamId)">
-                                查看队伍信息
-                            </Button>
-                        </Col>
-                    </div>
+                        </Button>
+                    </Col>
+                    <Col span="8" v-if="hasRegister" style="color: #ed4014; padding: 0 10px;">
+                        <h1>
+                            查看队伍信息
+                        </h1>
+                        想知道你队伍的组建情况？快点进来看看<br>
+                        <Button type="error" style="margin-top: 20px;" @click="showTeam(myTeamId)">
+                            查看队伍信息
+                        </Button>
+                    </Col>
                 </div>
             </Row>
             <Divider />
@@ -243,7 +244,7 @@
             },
             getUserLoginStatus() {
                 setTimeout(() => {
-                    this.hasLogin = this.$store.getters.loginStatus
+                    this.hasLogin = this.$store.getters.loginStatus                    
                 }, 200);
             }
         },
@@ -266,6 +267,9 @@
                     this.getUserLoginStatus()
                 }
             }
+        },
+        updated() {
+            this.getUserLoginStatus()
         }
     }
 </script>

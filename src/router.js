@@ -2,7 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home'
 import ContestList from './views/contest/ContestList'
+import ContestPromotionList from './views/contest/ContestPromotionList'
 import ContestInfo from './views/contest/ContestInfo'
+import ContestDetail from './views/contest/ContestDetail.vue'
 import SchoolTeam from './views/crews/SchoolTeam'
 import ACMDetail from './views/acm/Detail.vue'
 import ACMRole from './views/acm/Role.vue'
@@ -12,11 +14,12 @@ import ACMDalao from './views/acm/Dalao.vue'
 import PersonalCenter from './views/personal/Center.vue'
 import CourseList from './views/course/CourseList'
 import CourseInfo from './views/course/CourseInfo'
+import MobileHome from './views/mobile/Home.vue'
 
 Vue.use(Router)
 
 export default new Router({
-    mode: 'history',
+    // mode: 'history',
     base: process.env.BASE_URL,
     routes: [{
             path: '/',
@@ -42,6 +45,22 @@ export default new Router({
             component: ContestInfo,
             meta: {
                 title: '比赛详情'
+            }
+        },
+        {
+            path: '/contest/detail',
+            name: 'contestDetail',
+            component: ContestDetail,
+            meta: {
+                title: '比赛详情'
+            }
+        },
+        {
+            path: '/contest/promotionList',
+            name: 'promotionList',
+            component: ContestPromotionList,
+            meta: {
+                title: '晋级名单'
             }
         },
         // acm简介
@@ -119,6 +138,11 @@ export default new Router({
             meta: {
                 title: '课程信息'
             }
+        },
+        {
+            path: '/mobile',
+            name: 'mobileHome',
+            component: MobileHome,
         }
     ]
 })

@@ -1,5 +1,6 @@
 <template>
     <div>
+        <base-nav style="margin-bottom: 30px;"></base-nav>
         <Content :style="{padding: '0 200px'}" class="content-font">
             <center>
                  <Avatar 
@@ -9,7 +10,7 @@
                 </Avatar>
                 <br><br>
                 <p>{{userData.userName}}</p>
-                <p>2016届ACM协会会长</p>
+                <!-- <p>2016届ACM协会会长</p> -->
                 <Tooltip content="我不要做咸鱼！点击旁边按钮刷新数据~">
                     <p>
                         {{this.filterDay(acmData == null ? null : acmData.lastAcceptTime)}}
@@ -25,33 +26,32 @@
                         <Row>
                             <Col span="11">
                                 <p>年级：{{userData.grade}}级</p>
-                                <p>职业类型：ACM退役选手</p>                            
+                                <p v-if="acmData != null">职业类型：{{thisYear - 3 >= userData.grade ? 'ACM退役选手' : 'ACM肝命选手'}}</p>
+                                <p v-if="acmData == null">职业类型：在校生</p>
                             </Col>
                             <Col span="11">
                                 <p>学院&专业：{{userData.collage}} {{userData.major}}</p>
-                                <p>部门：竞赛部</p>
+                                <p>部门：{{acmData == null ? '不是ACMer噢' : filterSection(acmData.section)}}</p>
                             </Col>
                         </Row>
                     </center>
                 </Content>
             <div v-if="acmData != null">
-
                 <Divider orientation="left" style="font-size:1.2em;">OJ信息</Divider>
-                
                 <Row>
                     <Col span="11">
                         <Card>
                             <p slot="title">HDU</p>
                             <p>{{acmData.hduId}}</p>
                             <p>Accepted: {{acmData.hduSolve}}</p>
-                            <p>Rank: 706</p>
+                            <!-- <p>Rank: 706</p> -->
                         </Card>
                     </Col>
                     <Col span="11" offset="2">
                         <Card>
                             <p slot="title">Codeforces</p>
                             <p>{{acmData.codeforcesId}}</p>
-                            <p>Accepted: 365</p>
+                            <!-- <p>Accepted: 365</p> -->
                             <p>Ranklist: {{acmData.score}}</p>
                         </Card>
                     </Col>
@@ -61,8 +61,9 @@
                     <Col span="11">
                         <Card>
                             <p slot="title">POJ</p>
-                            <p>QuanQ</p>
-                            <p>Accepted: 50</p>
+                            <!-- <p>QuanQ</p> -->
+                            <!-- <p>Accepted: 50</p> -->
+                            <p>开发者很懒没有爬数据噢</p>
                         </Card>
                     </Col>
                     <Col span="11" offset="2">
@@ -89,17 +90,25 @@ export default {
             color: "#00a2ae",
             acmData: {},
             userData: {},
+            thisYear: 2019,
+            section: ['无业游民', '组织部', '技术部', '宣传部', '竞赛部']
         }
     },
     filters: {
         
     },
     methods: {
+        filterSection(type) {
+            if (type > 4) {
+                type = 0
+            }
+            return this.section[type]
+        },
         filterDay(time) {
             if (this.acmData == null) {
                 return "小伙子,很遗憾你不是ACM队员,这里没有你的信息噢";
             }
-            var nowTime = Date.parse(new Date());
+            let nowTime = Date.parse(new Date());
             let acTime = parseInt(time)
             console.log(acTime)
             if (acTime == -1) {
@@ -123,11 +132,16 @@ export default {
                 this.userData = ret.data
                 console.log(this.userData)
             })
+        },
+        initData() {
+            let nowTime = Date.parse(new Date());
+            this.thisYear = nowTime.getFUllYear()
         }
     },
     created() {
         this.getAcmInfo()
         this.getUserInfo()
+        this.initData()
     }
 }
 </script>

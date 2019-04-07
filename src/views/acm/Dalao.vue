@@ -1,11 +1,15 @@
 <template>
-    <Content :style="{padding: '0 200px'}">
-        <h1>历届毕业</h1>
-        <br>
-        <Table
-        :columns="columns" 
-        :data="dalaoData"></Table>
-    </Content>
+    <div>
+        <base-nav style="margin-bottom: 30px;"></base-nav>
+        <Content :style="{padding: '0 200px'}">
+            <h1>历届毕业</h1>
+            <br>
+            <Table
+            :columns="columns" 
+            :data="dalaoData"></Table>
+        </Content>
+    </div>
+    
 </template>
 
 <script>

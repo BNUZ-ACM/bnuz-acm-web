@@ -11,7 +11,7 @@
         欢迎你创建<b>{{title}}</b>队伍<br/>
         <br>
         <Input style="width: 410px;"
-        v-model="teamData.teamName">
+            v-model="teamData.teamName">
             <span slot="prepend">队伍名称</span>
         </Input>
         <br>
@@ -26,6 +26,12 @@
         clearable style="width: 350px" 
         type="password"
         v-model="teamData.password"/>
+        <br>
+        <br>
+        <Input style="width: 410px;"
+            v-model="teamData.comment">
+            <span slot="prepend">队伍备注</span>
+        </Input>
         <br><br>
         注意：比赛过程中最终解释权归<b>北京师范大学珠海分校ACM协会</b>所有。
     </div>
@@ -40,6 +46,8 @@ import TeamApi from '@/http/api/Team'
 import TeamFactory from '@/entity/TeamEntity'
 import Request from '@/util/request_util'
 import util from '@/util/tool_util'
+import { Message } from 'iview'
+
 export default {
     props: {
         formVisible: false,
@@ -89,16 +97,32 @@ export default {
             this.teamData.teamName = ""
         },
         createTeam() {
+            let checkTeamName = util.checkName(this.teamData.teamName, 1)
+            if (checkTeamName != '') {
+                Message.error(checkTeamName)
+                return 
+            }
             let team = TeamFactory.get()
             team.contestId = this.contestId
             if (this.hasPassword) {
                 team.hasPsw = 1
+                let check = util.checkStr(this.teamData.password, "队伍密码", 15, false)
+                if (check != '') {
+                    Message.error(check)
+                    return 
+                }
                 team.password = this.teamData.password                
             } else {
                 team.hasPsw = 0
                 team.password = null
             }
+            let check = util.checkStr(this.teamData.comment, "队伍备注", 20, true)
+            if (check != '') {
+                Message.error(check)
+                return
+            }
             team.teamName = this.teamData.teamName
+            team.comment = this.teamData.comment
             Request.msg(TeamApi.createTeam, [team], (ret) => {
                 this.dialogIsUpdate = this.dialogIsUpdate + 1
                 this.closeDialog()

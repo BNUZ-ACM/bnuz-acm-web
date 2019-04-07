@@ -1,12 +1,16 @@
 <template>
-    <Content :style="{padding: '0 200px'}">
-        <h1>获奖情况</h1>
-        <br>
-        <Table
-        :columns="columns" 
-        :data="honorData"
-        :row-class-name="rowClassName"></Table>
-    </Content>
+    <div>
+        <base-nav style="margin-bottom: 30px;"></base-nav>
+        <Content :style="{padding: '0 200px'}">
+            <h1>获奖情况</h1>
+            <br>
+            <Table
+            :columns="columns" 
+            :data="honorData"
+            :row-class-name="rowClassName"></Table>
+        </Content>
+    </div>
+    
 </template>
 
 <style>

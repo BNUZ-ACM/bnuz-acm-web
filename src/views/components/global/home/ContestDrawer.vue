@@ -3,16 +3,25 @@
     v-model="drawerShowControl" 
     v-if="teamData != null"
     class="drawer-content"
-    width="300"
+    width="350"
     >
         <h1 class="drawer-content-lg">{{teamData.teamName}}</h1>
         <p class="drawer-content">当前人数：{{teamData.memberNum}}人{{teamData.memberNum == 3 ? '（已满人）' : ''}}</p>        
         <br>
+        <Divider orientation="left" class="drawer-content-md">队长</Divider>
+        <div v-for="(competitor, index) in competitorList" :key="competitor.compId" class="drawer-content" style="vertical-align: middle; margin-top:10px;">
+            <span v-if="index == 0">{{competitor.nickName}} ({{competitor.userId}}) </span>
+        </div>
         <Divider orientation="left" class="drawer-content-md">队员们</Divider>
+        <div v-if="Object.keys(competitorList).length <= 1">
+            {{relation == 1 ? '没有队友的你好惨啊，赶紧去召集小伙伴一起打比赛吧~' : '这个队贼惨，要不考虑加入助他一力 [手动doge]'}}
+        </div>
+        <div v-for="(competitor, index) in competitorList" :key="competitor.compId" class="drawer-content" style="vertical-align: middle; margin-top:10px; padding: 0 auto; display: table-cell">
+            <span v-if="index != 0">{{competitor.nickName}} ({{competitor.userId}}) </span> 
+            <Button v-if="index != 0 && relation == 1" type="info" size="small" @click="confirm(confirmMap.changeCaptain, [competitor.compId])">移交队长</Button>
+            &nbsp<Button v-if="index != 0 && relation == 1" type="warning" size="small" @click="confirm(confirmMap.removeTeamMember, [competitor.compId])">移除队员</Button>
         
-        <p v-for="(competitor, index) in competitorList" :key="competitor.compId" class="drawer-content">
-            {{competitor.nickName}} ({{competitor.userId}}) <Button v-if="index != 0 && relation == 1" type="warning" size="small">移除队员</Button>
-        </p>
+        </div>
         <br>
         <p v-if="teamData.comment != null && teamData.comment != ''">队伍备注：{{teamData.comment}}</p>
         <div v-if="relation == 0">
@@ -46,8 +55,14 @@
             :disabled="!hasPassword" 
             placeholder="请输入密码" 
             type="password"
-            clearable style="width: 205px" 
+            clearable style="width: 255px" 
             v-model="updateTeamData.password"/>
+            <br>
+            <br>
+            <Input
+                v-model="updateTeamData.comment">
+                <span slot="prepend">队伍备注</span>
+            </Input>
             <br><br>
             <center>
                 <Button type="info" @click="updateTeam()">更改队伍信息</Button>
@@ -82,6 +97,7 @@ import CompetitorApi from '@/http/api/Competitor'
 import Request from '@/util/request_util'
 import util from '@/util/tool_util'
 import TeamFactory from '@/entity/TeamEntity'
+import { Message } from 'iview'
 
 export default {
     props: {
@@ -101,7 +117,8 @@ export default {
             relation: 0,
             updateTeamData: {
                 password: "",
-                teamName: ""
+                teamName: "",
+                comment: "",
             },
             confirmMap: {
                 removeTeamMember: {
@@ -121,6 +138,12 @@ export default {
                     content: "你确定你要让队友们无家可归吗，呜呜",
                     cancelMessage: "恩，手误了，真香",
                     confirmFunc: this.deleteTeam
+                },
+                changeCaptain: {
+                    title: "更换队长",
+                    content: "确定要把队长交给它了嘛，不再作为队长carry队伍了吗？",
+                    cancelMessage: "果然还是当队长比较帅啊",
+                    confirmFunc: this.changeCaptain
                 }
             }
         }
@@ -133,8 +156,8 @@ export default {
             if (this.teamId != '' && this.teamId != null && typeof(this.teamId) != "undefined") {
                 Request.msg(TeamApi.getTeamInfo, [this.teamId], (ret) => {  
                     this.teamData = ret.data.team
-                    console.log(this.teamData)
                     this.updateTeamData.teamName = ret.data.team.teamName
+                    this.updateTeamData.comment = ret.data.team.comment
                     this.competitorList = ret.data.competitorList
                     this.relation = ret.data.relation
                     if (this.relation == 0) {
@@ -163,15 +186,31 @@ export default {
             })
         },
         updateTeam() {
+            let checkTeamName = util.checkName(this.updateTeamData.teamName, 1)
+            if (checkTeamName != '') {
+                Message.error(checkTeamName)
+                return 
+            }
             let team = TeamFactory.get()
             team.teamId = this.teamId
             team.teamName = this.updateTeamData.teamName
+            team.comment = this.updateTeamData.comment
             if (this.hasPassword) {
                 team.hasPsw = 1
+                let check = util.checkStr(this.updateTeamData.password, "队伍密码", 15, true)
+                if (check != '') {
+                    Message.error(check)
+                    return 
+                }
                 team.password = this.updateTeamData.password
             } else {
                 team.hasPsw = 0
                 team.password = null
+            }
+            let check = util.checkStr(this.updateTeamData.comment, "队伍备注", 20, true)
+            if (check != '') {
+                Message.error(check)
+                return
             }
             Request.msg(TeamApi.updateTeam, [team], (ret) => {
                 this.updateTeamData.password = ""
@@ -199,13 +238,18 @@ export default {
                 this.drawerIsUpdate = this.drawerIsUpdate + 1
             })
         },
+        changeCaptain(compId) {
+            let teamId = this.teamId
+            Request.msg(TeamApi.changeCaptain, [teamId, compId], (ret) => {
+                this.drawerIsUpdate = this.drawerIsUpdate + 1
+            })
+        },
         confirm(confirmType, params = []) {
             var confirmData = confirmType
             this.$Modal.confirm({
                 title: confirmData.title,
                 content: confirmData.content,
                 onOk: () => {
-                    console.log("====")
                     if (confirmData.confirmFunc != null) {
                         confirmData.confirmFunc(...params)
                     }

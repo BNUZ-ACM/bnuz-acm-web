@@ -4,6 +4,7 @@ import HomeLoginDialog from './home/LoginDialog'
 import CourseDialog from './home/CourseDialog'
 import ContestDrawer from './home/ContestDrawer'
 import ContestTeamDialog from './home/ContestTeamDialog'
+import BaseNav from '@/views/public/BaseNav'
 import Vue from 'vue'
 
 export default () => {
@@ -11,4 +12,5 @@ export default () => {
     Vue.component('course-dialog', CourseDialog)
     Vue.component('contest-drawer', ContestDrawer)
     Vue.component('contest-team-dialog', ContestTeamDialog)
+    Vue.component('base-nav', BaseNav)
 }

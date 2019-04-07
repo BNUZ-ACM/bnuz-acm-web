@@ -13,12 +13,12 @@
         <FormItem label="密码" prop="password">
             <Input type="password" v-model="formValidate.password" placeholder="请输入你的密码，第一次登录密码为教务密码"></Input>
         </FormItem>
-        <Alert type="error" v-if="isPromptShow" show-icon>{{errorMessage}}</Alert>
+        
       </Form>
     </div>
     <div slot="footer">
-        <Button type="error" size="large" @click="login" @keyup.enter.native="login">登录</Button>
-        <Button type="default" size="large" @click="dialogFormVisible = false">取消</Button>
+      <Button type="error" size="large" @click="login" @keyup.enter.native="login">登录</Button>
+      <Button type="default" size="large" @click="dialogFormVisible = false">取消</Button>
     </div>
     <Spin fix size="large" v-if="isSpinShow"></Spin>
   </Modal>
@@ -27,10 +27,12 @@
 import { login } from '@/http/api/Auth'
 import UserApi from '@/http/api/User'
 import Request from '@/util/request_util'
+import { Message } from 'iview'
 
 export default {
   props: {
     formVisible: false,
+    isUpdate: 0,
   },
   computed: {
     dialogFormVisible: {
@@ -40,12 +42,19 @@ export default {
       set: function(value) {
         this.$emit('update:formVisible', value);
       }
-    }
+    },
+    dialogIsUpdate: {
+        get: function() {
+            return this.isUpdate;
+        },
+        set: function(value) {
+            this.$emit('update:isUpdate', value);
+        }
+    },
   },
   data () {
     return {
         isSpinShow: false,
-        isPromptShow: false,
         errorMessage: '',
         formValidate: {
             username: '',
@@ -62,9 +71,27 @@ export default {
     }
   },
   methods: {
+    validateLoginForm(data) {
+      console.log(data)
+      if (data.username == '' || data.username == null) {
+        return this.ruleValidate.username[0].message
+      }
+      if (data.password == '' || data.password == null) {
+        return this.ruleValidate.password[0].message
+      }
+      let reg = /^1\d{9}$/
+      if (!reg.test(data.username)) {
+        return "账号不合法"
+      }
+      return ''
+    },
     async login() {
-      // const data = await login(this.formValidate.username, this.formValidate.password);
-      // console.log(data)
+      let checkLoginFormMsg = this.validateLoginForm(this.formValidate)
+      if (checkLoginFormMsg != '') {
+        console.log(checkLoginFormMsg)
+        Message.error(checkLoginFormMsg)
+        return 
+      }
       this.isSpinShow = true
       Request.msg(login, [this.formValidate.username, this.formValidate.password], (ret) => {
         // 登录成功塞token
@@ -74,6 +101,7 @@ export default {
         UserApi.getInfo().then((ret) => {
           this.$store.commit("setUser", ret.data);
           this.isSpinShow = false
+          this.dialogIsUpdate = this.dialogIsUpdate + 1
           // this.$router.push({ path: "/" });
         }, (ret) => {
           this.isSpinShow = false
@@ -86,7 +114,6 @@ export default {
       this.formValidate.username = '';
       this.formValidate.password = '';
       this.dialogFormVisible = false;
-      this.isPromptShow = false;
     }
   },
   watch: {

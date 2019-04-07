@@ -1,16 +1,23 @@
 <template>
-  <div class="home">
-    <center>
-      <img alt="Vue logo" src="../assets/big-logo.png">
-      <div>
-        <h1 class="word-size-h1">思考-灵感-气球</h1>
-        <h1 class="word-size-h1">BNUZ ACM Team</h1>
-        <h2 class="word-size-h2">荣耀与梦想</h2>
-        <h2 class="word-size-h2">你我同创</h2>
-        <br><br>
-        <Button :size="'large'" type="warning" ghost>加入我们</Button>
-      </div>
-    </center>
+  <div>
+    <base-nav></base-nav>
+
+    <!-- <div class="home">
+      <center>
+        <img alt="Vue logo" src="../assets/big-logo.png">
+        <div>
+          <h1 class="word-size-h1">思考-灵感-气球</h1>
+          <h1 class="word-size-h1">BNUZ ACM Team</h1>
+          <h2 class="word-size-h2">荣耀与梦想</h2>
+          <h2 class="word-size-h2">你我同创</h2>
+          <br><br>
+          <Button :size="'large'" type="warning" ghost>加入我们</Button>
+        </div>
+      </center>
+    </div> -->
+    <div class="it-background">
+
+    </div>
   </div>
 </template>
 
@@ -27,5 +34,16 @@ export default {
   }
   .word-size-h2 {
     font-size: 3em;
+  }
+  .it-background {
+    background: url('../assets/it-background/2019-it.jpeg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    min-height: 800px;
+  }
+  #nav {
+    margin-bottom: 0px !important;
   }
 </style>
