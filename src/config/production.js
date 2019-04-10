@@ -7,11 +7,11 @@
 import default_config from './default'
 
 export default Object.assign({}, default_config, {
-  // http server config
-  http: {
-    prot: 'https',
-    host: 'www.hdzt.cn',
-    port: '80',
-    preUrl: '/api'
-  }
+    // http server config
+    http: {
+        prot: 'http',
+        host: 'acm.bnuz.edu.cn',
+        port: '80',
+        preUrl: '/api'
+    }
 })
