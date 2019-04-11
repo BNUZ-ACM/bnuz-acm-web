@@ -107,7 +107,7 @@ export default {
             return this.section[type]
         },
         filterDay(time) {
-            if (this.acmData == null || typeof(time) != "undefined" || time == null) {
+            if (this.acmData == null || typeof(time) == "undefined" || time == null) {
                 return "小伙子,很遗憾你不是ACM队员,这里没有你的信息噢";
             }
             let nowTime = new Date();

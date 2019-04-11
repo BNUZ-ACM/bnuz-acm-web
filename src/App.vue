@@ -2,8 +2,7 @@
     <div>
         <div id="app">
             <router-view/>
-            <base-bottom msg="Copyright ©2018 北京师范大学珠海分校-ACM协会 "/>
-            
+            <base-bottom msg="Copyright ©2019 北京师范大学珠海分校-ACM协会 "/>
         </div>
     </div>
 </template>

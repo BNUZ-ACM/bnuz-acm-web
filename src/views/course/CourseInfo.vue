@@ -3,7 +3,9 @@
         <base-nav style="margin-bottom: 30px;"></base-nav>
         <Content :style="{padding: '0 200px'}">
             <h1 style="font-size: 3em;">{{courseInfo.courseName}}</h1>
-            <span @click="showLoginDialog = true"><Button icon="ios-bulb-outline" type="primary">报名参加</Button></span>
+            <span v-if="myScholarId == ''" @click="showLoginDialog = true"><Button icon="ios-bulb-outline" type="primary">报名参加</Button></span>
+            <span v-if="myScholarId != ''"><Button icon="ios-bulb-outline" type="primary" disabled>已报名</Button></span>
+            
             <Divider />
             <h1>课程说明</h1>
             <Card class="course-font-size" style="width:100%; margin-top: 10px; margin-bottom: 10px;">
@@ -45,7 +47,7 @@
             :title="'课程报名'"
             :grade="20"
             :isUpdate.sync="isUpdate"
-            />
+            />=
         </Content>
     </div>
     
@@ -63,6 +65,7 @@ export default {
             showLoginDialog: false,
             courseId: "",
             isUpdate: false,
+            myScholarId: "",
             columns: [
                 {
                     type: 'index',
@@ -127,7 +130,8 @@ export default {
         },
         getCourseInfo() {
             Request.msg(CourseApi.getCourseByID, [this.$route.query.id], (ret) => {
-                this.courseInfo = ret.data
+                this.courseInfo = ret.data.course
+                this.myScholarId = ret.data.scholarId
             }, null, false)
         },
     },
