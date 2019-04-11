@@ -47,7 +47,7 @@
                                             <Avatar shape="square" size="large" src="http://userpic.codeforces.com/693157/title/7d7922bb0cb66f5.jpg"></Avatar>
                                         </a>
                                     </Badge>
-                                    曾庆旺 <Tag color="#20b2aa">HandsomeZeng</Tag>
+                                    曾庆望 <Tag color="#20b2aa">HandsomeZeng</Tag>
                                 </p>
                                 <p class="content time-content-size">
                                     <Badge text="1341" class-name="badge-logo-spe">
@@ -56,6 +56,28 @@
                                         </a>
                                     </Badge>
                                     郑景仁 <Tag color="#20b2aa">zheng835059695</Tag>
+                                </p>
+                                <p class="content time-content-size">
+                                    蒋习博
+                                </p>
+                                <p class="content time-content-size">
+                                    庄灿炎
+                                </p>
+                                
+                                <p class="content time-content-size">
+                                    王鸷天
+                                </p>
+                                <p class="content time-content-size">
+                                    詹欣明
+                                </p>
+                                <p class="content time-content-size">
+                                    林钰浩
+                                </p>
+                                <p class="content time-content-size">
+                                    许靖
+                                </p>
+                                <p class="content time-content-size">
+                                    陈瑞琪
                                 </p>
                             </Col>
                             <Col span="12">
