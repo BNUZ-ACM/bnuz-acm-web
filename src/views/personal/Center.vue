@@ -6,7 +6,7 @@
                  <Avatar 
                 class="icon-large"
                 :style="{background: color}" size="large">
-                    <span class="icon-content">Y</span>
+                    <span class="icon-content">{{headerPinyin}}</span>
                 </Avatar>
                 <br><br>
                 <p>{{userData.userName}}</p>
@@ -84,6 +84,7 @@ import ACMerApi from '@/http/api/ACMer'
 import UserApi from '@/http/api/User'
 import Request from '@/util/request_util'
 import util from '@/util/tool_util'
+import Pinyin from '@/util/pinyin_util'
 export default {
     data() {
         return {
@@ -91,6 +92,7 @@ export default {
             acmData: null,
             userData: {},
             thisYear: 2019,
+            headerPinyin: "N",
             section: ['无业游民', '组织部', '技术部', '宣传部', '竞赛部']
         }
     },
@@ -128,6 +130,10 @@ export default {
         getUserInfo() {
             Request.msg(UserApi.getInfo, [], (ret) => {
                 this.userData = ret.data
+                let pinyin = Pinyin.chineseToPinYin(this.userData.userName)
+                if (pinyin.length > 0) {
+                    this.headerPinyin = pinyin.charAt(0)
+                }
             }, null, false)
         },
         initData() {
