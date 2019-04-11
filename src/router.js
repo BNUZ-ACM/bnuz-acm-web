@@ -1,21 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home'
-import ContestList from './views/contest/ContestList'
-import ContestPromotionList from './views/contest/ContestPromotionList'
-import ContestInfo from './views/contest/ContestInfo'
-import ContestDetail from './views/contest/ContestDetail.vue'
-import ContestPersonal from './views/contest/ContestPerson'
-import SchoolTeam from './views/crews/SchoolTeam'
-import ACMDetail from './views/acm/Detail.vue'
-import ACMRole from './views/acm/Role.vue'
-import ACMClaim from './views/acm/Claim.vue'
-import ACMHonor from './views/acm/Honor.vue'
-import ACMDalao from './views/acm/Dalao.vue'
-import PersonalCenter from './views/personal/Center.vue'
-import CourseList from './views/course/CourseList'
-import CourseInfo from './views/course/CourseInfo'
-import MobileHome from './views/mobile/Home.vue'
 
 Vue.use(Router)
 
@@ -34,7 +19,7 @@ export default new Router({
         {
             path: '/contest/list',
             name: 'contestList',
-            component: ContestList,
+            component: resolve => require(['./views/contest/ContestList'], resolve),
             meta: {
                 title: '比赛列表'
             }
@@ -43,7 +28,7 @@ export default new Router({
         {
             path: '/contest/info',
             name: 'contestInfo',
-            component: ContestInfo,
+            component: resolve => require(['./views/contest/ContestInfo'], resolve),
             meta: {
                 title: '比赛详情'
             }
@@ -51,7 +36,7 @@ export default new Router({
         {
             path: '/contest/personal',
             name: 'ContestPersonal',
-            component: ContestPersonal,
+            component: resolve => require(['./views/contest/ContestPerson'], resolve),
             meta: {
                 title: '比赛详情'
             }
@@ -59,7 +44,7 @@ export default new Router({
         {
             path: '/contest/detail',
             name: 'contestDetail',
-            component: ContestDetail,
+            component: resolve => require(['./views/contest/ContestDetail.vue'], resolve),
             meta: {
                 title: '比赛详情'
             }
@@ -67,7 +52,7 @@ export default new Router({
         {
             path: '/contest/promotionList',
             name: 'promotionList',
-            component: ContestPromotionList,
+            component: resolve => require(['./views/contest/ContestPromotionList'], resolve),
             meta: {
                 title: '晋级名单'
             }
@@ -76,7 +61,7 @@ export default new Router({
         {
             path: '/acm/detail',
             name: 'detail',
-            component: ACMDetail,
+            component: resolve => require(['./views/acm/Detail.vue'], resolve),
             meta: {
                 title: 'ACM简介'
             }
@@ -84,7 +69,7 @@ export default new Router({
         {
             path: '/acm/role',
             name: 'role',
-            component: ACMRole,
+            component: resolve => require(['./views/acm/Role.vue'], resolve),
             meta: {
                 title: 'ACM规则'
             }
@@ -92,7 +77,7 @@ export default new Router({
         {
             path: '/acm/claim',
             name: 'claim',
-            component: ACMClaim,
+            component: resolve => require(['./views/acm/Claim.vue'], resolve),
             meta: {
                 title: '编程要求'
             }
@@ -101,7 +86,7 @@ export default new Router({
         {
             path: '/acm/crews/team',
             name: 'schoolTeam',
-            component: SchoolTeam,
+            component: resolve => require(['./views/crews/SchoolTeam'], resolve),
             meta: {
                 title: '校队介绍'
             }
@@ -109,7 +94,7 @@ export default new Router({
         {
             path: '/acm/crews/honor',
             name: 'honor',
-            component: ACMHonor,
+            component: resolve => require(['./views/acm/Honor.vue'], resolve),
             meta: {
                 title: '获奖情况'
             }
@@ -117,7 +102,7 @@ export default new Router({
         {
             path: '/acm/crews/dalao',
             name: 'dalao',
-            component: ACMDalao,
+            component: resolve => require(['./views/acm/Dalao.vue'], resolve),
             meta: {
                 title: '历届毕业'
             }
@@ -126,7 +111,7 @@ export default new Router({
         {
             path: '/personal/center',
             name: 'center',
-            component: PersonalCenter,
+            component: resolve => require(['./views/personal/Center.vue'], resolve),
             meta: {
                 title: '个人中心'
             }
@@ -135,7 +120,7 @@ export default new Router({
         {
             path: '/course/list',
             name: 'courseList',
-            component: CourseList,
+            component: resolve => require(['./views/course/CourseList'], resolve),
             meta: {
                 title: '课程列表'
             }
@@ -143,7 +128,7 @@ export default new Router({
         {
             path: '/course/info',
             name: 'course',
-            component: CourseInfo,
+            component: resolve => require(['./views/course/CourseInfo'], resolve),
             meta: {
                 title: '课程信息'
             }
@@ -151,7 +136,7 @@ export default new Router({
         {
             path: '/mobile',
             name: 'mobileHome',
-            component: MobileHome,
+            component: resolve => require(['./views/mobile/Home.vue'], resolve),
         }
     ]
 })
