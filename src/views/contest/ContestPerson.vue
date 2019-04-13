@@ -169,7 +169,6 @@
             getContestData() {
                 let id = this.$route.query.id
                 Request.msg(ContestApi.getContestDetail, [id], (ret) => {
-                    console.log(ret)                    
                     this.contestData = ret.data.contest
                     this.myCompId = ret.data.compId
                 }, null, false)

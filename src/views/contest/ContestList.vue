@@ -71,11 +71,11 @@
         if (competitionTime <= 0) {
           return "0个小时"
         }
-        competitionTime /= 1000
+        competitionTime = parseInt(competitionTime / 1000)
         let sustained = parseInt(Math.floor(competitionTime / 60 / 60))
         let sustainedMod = competitionTime % 3600
         let timeStr = ""
-        if (sustainedMod == 0) {
+        if (sustainedMod != 0) {
           timeStr = "约"
         }
         if (sustained >= 24) {

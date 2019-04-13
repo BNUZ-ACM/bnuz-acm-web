@@ -97,7 +97,6 @@ export default {
     },
     commit() {
         let isSuccess = this.personalData.confirmButton(this.competitor)
-        console.log(isSuccess)
         if (isSuccess) {
             this.dialogIsUpdate = this.dialogIsUpdate + 1
             this.dialogFormVisible = false

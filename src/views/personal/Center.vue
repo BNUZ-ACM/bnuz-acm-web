@@ -42,17 +42,26 @@
                     <Col span="11">
                         <Card>
                             <p slot="title">HDU</p>
-                            <p>{{acmData.hduId}}</p>
-                            <p>Accepted: {{acmData.hduSolve}}</p>
-                            <!-- <p>Rank: 706</p> -->
+                            <div v-if="acmData.hduId == null">
+                                暂时没有你的hdu信息噢
+                            </div>
+                            <div v-if="acmData.hduId != null">
+                                <p>{{acmData.hduId}}</p>
+                                <p>Accepted: {{acmData.hduSolve}}</p>
+                            </div>
                         </Card>
                     </Col>
                     <Col span="11" offset="2">
                         <Card>
                             <p slot="title">Codeforces</p>
-                            <p>{{acmData.codeforcesId}}</p>
-                            <!-- <p>Accepted: 365</p> -->
-                            <p>Ranklist: {{acmData.score}}</p>
+                            <div v-if="acmData.codeforcesId == null">
+                                暂时没有你的codeforces信息噢
+                            </div>
+                            <div v-if="acmData.codeforcesId != null">
+                                <p>{{acmData.codeforcesId}}</p>
+                                <p>Ranklist: {{acmData.score}}</p>
+                            </div>
+                            
                         </Card>
                     </Col>
                 </Row>
@@ -69,8 +78,14 @@
                     <Col span="11" offset="2">
                         <Card>
                             <p slot="title">VJudge</p>
-                            <p>{{acmData.vjudgeId}}</p>
-                            <p>Accepted: 189</p>
+                            <div v-if="acmData.vjudgeId == null">
+                                暂时没有你的vjudge信息噢
+                            </div>
+                            <div v-if="acmData.vjudgeId != null">
+                                <p>{{acmData.vjudgeId}}</p>
+                                <p>Accepted: {{acmData.vjudgeSolve}}</p>
+                            </div>
+                            
                         </Card>
                     </Col>
                 </Row>

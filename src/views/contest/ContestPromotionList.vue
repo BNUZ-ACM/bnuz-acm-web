@@ -89,7 +89,7 @@
                     },
                     {
                         title: '晋级状态',
-                        key: 'isPromotionStr',
+                        key: 'isPromotion',
                         filters: [
                             {
                                 label: '晋级',
@@ -122,7 +122,8 @@
                 } else {
                     return " (组队赛)"
                 }
-            }
+            },
+            
         },
         methods: {
             getContestData() {
@@ -131,18 +132,25 @@
                     this.contestData = ret.data.contest
                 }, null, false)
             },
-            filterIsPromotion(type) {
-                return type == 1 ? '晋级' : '未晋级'
-            },
             getPromotionList() {
                 let id = this.$route.query.id
                 Request.msg(PromotionApi.getPromotionList, [id], (ret) => {
                     this.promotionList = ret.data
                     for (let i = 0; i < this.promotionList.length; i++) {
-                        this.promotionList.isPromotionStr = filterIsPromotion(this.promotionList[i].isPromotion)
+                        this.promotionList[i].isPromotion = this.filterIsPromotion(this.promotionList[i].isPromotion)
+                        this.promotionList[i].userName = this.filterPromotionName(this.promotionList[i].userName)
                     }
                     this.promotionSize = this.promotionList.length
                 }, null, false)
+            },
+            filterIsPromotion(type) {
+                return type == 1 ? '晋级' : '未晋级'
+            },
+            filterPromotionName(name) {
+                if (name == '' || name == null) {
+                    return '登录后登记信息可见用户名'
+                }
+                return name
             }
         },
         created() {

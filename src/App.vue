@@ -45,8 +45,6 @@ export default {
     mounted() {
         if (this._isMobile()) {
             this.$router.replace('/mobile/');
-        } else {
-            this.$router.replace('/');
         }
     }
 }
