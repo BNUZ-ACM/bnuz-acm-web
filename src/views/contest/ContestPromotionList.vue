@@ -13,7 +13,7 @@
                 {{contestData.contestName}} {{contestData.style | filterContestType}}
             </h1>
             <h2>
-                这次比赛共晋级x人，如果没有你晋级信息可以登录后看到噢~
+                这次比赛共晋级{{promotionSize}}人，如果没有你姓名可以登录后看到噢~
             </h2>
             <Divider/>
             <h1>晋级名单</h1>
@@ -35,6 +35,7 @@
         data () {
             return {
                 contestData: {},
+                promotionSize: 0,
                 columns: [
                     {
                         type: 'index',
@@ -140,6 +141,7 @@
                     for (let i = 0; i < this.promotionList.length; i++) {
                         this.promotionList.isPromotionStr = filterIsPromotion(this.promotionList[i].isPromotion)
                     }
+                    this.promotionSize = this.promotionList.length
                 }, null, false)
             }
         },

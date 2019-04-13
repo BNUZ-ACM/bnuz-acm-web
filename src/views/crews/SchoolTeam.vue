@@ -168,6 +168,9 @@
                                 <p class="content time-content-size">
                                     渠慧帆 <Tag color="#228b22">CrazySona</Tag>
                                 </p>
+                                <p class="content time-content-size">
+                                    吴佳翎
+                                </p>
                             </Col>
                             <Col span="12">
                                 <!-- <img alt="2015校队" src="../../assets/team/2016.jpg" width="500"> -->
@@ -183,6 +186,15 @@
                                 </p>
                                 <p class="content time-content-size">
                                     何俊艺
+                                </p>
+                                <p class="content time-content-size">
+                                    唐子惠
+                                </p>
+                                <p class="content time-content-size">
+                                    崔成杰
+                                </p>
+                                <p class="content time-content-size">
+                                    夏玮泽
                                 </p>
                             </Col>
                             <Col span="12">
