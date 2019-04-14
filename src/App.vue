@@ -42,6 +42,17 @@ export default {
             return flag;
         }
     },
+    created() {
+        this.$Notice.config({
+            top: 60,
+            duration: 3
+        });
+        this.$Notice.warning({
+            title: '竞赛通知',
+            desc: '本次晋级名单中未显示网赛排名满足晋级资格，但因查重或往届违反竞赛规则而被取消晋级资格的同学，如有疑问，请私下联系ACM协会负责学生陈仰焦同学或软件系主任吴小勇老师',
+            duration: 0
+        });
+    },
     mounted() {
         if (this._isMobile()) {
             this.$router.replace('/mobile/');

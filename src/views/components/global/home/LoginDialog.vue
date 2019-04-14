@@ -11,9 +11,11 @@
             <Input v-model="formValidate.username" placeholder="请输入账号，账号为学号"/>
         </FormItem>
         <FormItem label="密码" prop="password">
-            <Input type="password" v-model="formValidate.password" placeholder="请输入你的密码，第一次登录密码为教务密码"></Input>
+            <Input type="password" v-model="formValidate.password" placeholder="请输入你的密码，第一次登录密码为教务密码" />
         </FormItem>
-        
+          <CheckboxGroup v-model="formValidate.checkbox">
+            <Checkbox label="agree">第一次登录本网站将储存你在学校的个人信息，请确认</Checkbox> 
+          </CheckboxGroup>
       </Form>
     </div>
     <div slot="footer">
@@ -59,6 +61,7 @@ export default {
         formValidate: {
             username: '',
             password: '',
+            checkbox: [],
         },
         ruleValidate: {
             username: [
@@ -85,6 +88,10 @@ export default {
       return ''
     },
     async login() {
+      if (this.formValidate.checkbox.length <= 0) {
+        Message.error("请同意授权本网站个人信息")
+        return
+      }
       let checkLoginFormMsg = this.validateLoginForm(this.formValidate)
       if (checkLoginFormMsg != '') {
         Message.error(checkLoginFormMsg)

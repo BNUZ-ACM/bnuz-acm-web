@@ -102,7 +102,7 @@
                         ],
                         filterMultiple: false,
                         filterMethod(value, row) {
-                            return row.isPromotion == value
+                            return row.isPromotion == '晋级'
                         }
                     },
                     {
