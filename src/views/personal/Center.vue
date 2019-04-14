@@ -61,7 +61,6 @@
                                 <p>{{acmData.codeforcesId}}</p>
                                 <p>Ranklist: {{acmData.score}}</p>
                             </div>
-                            
                         </Card>
                     </Col>
                 </Row>
@@ -70,9 +69,13 @@
                     <Col span="11">
                         <Card>
                             <p slot="title">POJ</p>
-                            <!-- <p>QuanQ</p> -->
-                            <!-- <p>Accepted: 50</p> -->
-                            <p>开发者很懒没有爬数据噢</p>
+                            <div v-if="acmData.pojId == null">
+                                暂时没有你的vjudge信息噢
+                            </div>
+                            <div v-if="acmData.pojId != null">
+                                <p>{{acmData.pojId}}</p>
+                                <p>Accepted: {{acmData.pojSolve}}</p>
+                            </div>
                         </Card>
                     </Col>
                     <Col span="11" offset="2">
@@ -85,7 +88,6 @@
                                 <p>{{acmData.vjudgeId}}</p>
                                 <p>Accepted: {{acmData.vjudgeSolve}}</p>
                             </div>
-                            
                         </Card>
                     </Col>
                 </Row>
