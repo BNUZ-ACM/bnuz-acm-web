@@ -31,7 +31,6 @@
                 type="password"
                 v-model="password"
                 @on-search="joinTeam(password)"
-                @keyup.enter.native="joinTeam(password)"
                 placeholder="请输入该队伍密码"/>
                 <br>
                 <span class="drawer-content"><b>注意：该队伍需要密码才可进入</b></span>            
