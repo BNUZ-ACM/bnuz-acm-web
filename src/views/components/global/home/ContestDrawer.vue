@@ -16,7 +16,7 @@
         <div v-if="Object.keys(competitorList).length <= 1">
             {{relation == 1 ? '没有队友的你好惨啊，赶紧去召集小伙伴一起打比赛吧~' : '这个队贼惨，要不考虑加入助他一力 [手动doge]'}}
         </div>
-        <div v-for="(competitor, index) in competitorList" :key="competitor.compId" class="drawer-content" style="vertical-align: middle; margin-top:10px; padding: 0 auto; display: table-cell">
+        <div v-for="(competitor, index) in competitorList" :key="competitor.compId + '1'" class="drawer-content" style="vertical-align: middle; margin-top:10px; padding: 0 auto; display: table-cell">
             <span v-if="index != 0">{{competitor.nickName}} ({{competitor.userId}}) </span> 
             <Button v-if="index != 0 && relation == 1" type="info" size="small" @click="confirm(confirmMap.changeCaptain, [competitor.compId])">移交队长</Button>
             &nbsp<Button v-if="index != 0 && relation == 1" type="warning" size="small" @click="confirm(confirmMap.removeTeamMember, [competitor.compId])">移除队员</Button>
@@ -31,14 +31,16 @@
                 type="password"
                 v-model="password"
                 @on-search="joinTeam(password)"
+                @keyup.enter.native="joinTeam(password)"
                 placeholder="请输入该队伍密码"/>
                 <br>
                 <span class="drawer-content"><b>注意：该队伍需要密码才可进入</b></span>            
             </div>
+            <div v-if="teamData.hasPsw == 0">
+                <Input search enter-button="加入" placeholder="嘻嘻我们队不需要密码噢" @on-search="joinTeam('')"/>
+            </div>
         </div>
-        <div v-if="teamData.hasPsw == 0">
-            <Input search enter-button="加入" placeholder="嘻嘻我们队不需要密码噢" disabled/>
-        </div>
+       
         <div v-if="relation == 1">
             <Divider orientation="left" class="drawer-content-md">设置队伍信息</Divider>
             <Input

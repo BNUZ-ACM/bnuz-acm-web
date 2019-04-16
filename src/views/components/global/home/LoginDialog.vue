@@ -1,5 +1,5 @@
 <template>
-  <Modal v-model="dialogFormVisible" width="360"
+  <Modal v-model="dialogFormVisible" width="360" 
     :styles="{top: '120px'}">
     <p slot="header" style="text-align:center;font-size:1.5em;">
         <!-- <Icon type="ios-information-circle"></Icon> -->
@@ -11,15 +11,15 @@
             <Input v-model="formValidate.username" placeholder="请输入账号，账号为学号"/>
         </FormItem>
         <FormItem label="密码" prop="password">
-            <Input type="password" v-model="formValidate.password" placeholder="请输入你的密码，第一次登录密码为教务密码" />
+            <Input type="password" v-model="formValidate.password" placeholder="请输入你的密码，第一次登录密码为教务密码" @keyup.enter.native="login"/>
         </FormItem>
           <CheckboxGroup v-model="formValidate.checkbox">
             <Checkbox label="agree">第一次登录本网站将储存你在学校的个人信息，请确认</Checkbox> 
           </CheckboxGroup>
       </Form>
     </div>
-    <div slot="footer">
-      <Button type="error" size="large" @click="login" @keyup.enter.native="login">登录</Button>
+    <div slot="footer" >
+      <Button type="error" size="large" @click="login">登录</Button>
       <Button type="default" size="large" @click="dialogFormVisible = false">取消</Button>
     </div>
     <Spin fix size="large" v-if="isSpinShow"></Spin>
