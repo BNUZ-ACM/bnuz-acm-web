@@ -9,7 +9,7 @@
             <div style="text-align: left;">
               <h2>{{course.courseName}}</h2>
               <Divider class="line-margin"/>
-              <div>
+              <div v-html="course.comment">
                 {{course.comment}}
               </div>
             </div>

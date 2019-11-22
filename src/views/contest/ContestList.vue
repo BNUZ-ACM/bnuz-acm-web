@@ -9,7 +9,7 @@
             <div style="text-align: left;">
               <h2>{{contest.contestName}} {{contest.style | filterContestType}}</h2>
               <Divider class="line-margin"/>
-              <div>
+              <div v-html="contest.comment">
                 {{contest.comment}}
               </div>
             </div>

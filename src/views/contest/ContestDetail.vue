@@ -20,7 +20,7 @@
             
             <h1>比赛要求</h1>
             <Card style="width:100%; margin-top: 10px;">
-                <Row v-html="contestData.contestBaseInfo || defaultContent">
+                <Row v-html="contestData.contestRequire || defaultContent">
                 </Row>
             </Card>
             <br>
