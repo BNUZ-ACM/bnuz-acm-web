@@ -31,7 +31,7 @@
             <Icon type="ios-construct" />
             协会课程
         </MenuItem>
-        <a target="_blank" :href="'https://www3.wejudge.net'" >
+        <a target="_blank" :href="'https://oj.bnuz.edu.cn'" >
           <MenuItem name="4">
               <Icon type="ios-construct" />
               WeJudgeOJ

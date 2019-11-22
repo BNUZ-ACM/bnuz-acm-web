@@ -2,7 +2,7 @@
   <div>
     <base-nav></base-nav>
 
-    <!-- <div class="home">
+    <div class="home">
       <center>
         <img alt="Vue logo" src="../assets/big-logo.png">
         <div>
@@ -14,10 +14,10 @@
           <Button :size="'large'" type="warning" ghost>加入我们</Button>
         </div>
       </center>
-    </div> -->
-    <div class="it-background">
-
     </div>
+    <!-- <div class="it-background"> -->
+
+    <!-- </div> -->
   </div>
 </template>
 
