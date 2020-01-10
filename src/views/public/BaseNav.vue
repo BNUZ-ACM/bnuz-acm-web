@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Menu mode="horizontal" :theme="'dark'" active-name="1">
+    <Menu mode="horizontal" :theme="'dark'" active-name="1" style="margin-bottom:1px;">
       <div>
         <MenuItem name="0" to="/">
           <div class="small-logo">
