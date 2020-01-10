@@ -92,7 +92,8 @@ export default {
 
 <style lang="stylus" scoped>
   .small-logo {
-    margin-top: 3%;
+    margin-top: 10px;
+    height 49px;
   }
   .right-box {
     border: 0;
