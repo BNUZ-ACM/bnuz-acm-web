@@ -9,6 +9,7 @@ import rehypeKatex from 'rehype-katex';
 // https://astro.build/config
 export default defineConfig({
   site: "https://hexw.zeabur.app",
+  outDir: './docs',
   integrations: [react(), tailwind({
     applyBaseStyles: false
   }), sitemap()],
