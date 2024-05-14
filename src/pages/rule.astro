@@ -1,0 +1,100 @@
+---
+import RootLayout from "@/layouts/RootLayout.astro";
+const title = "竞赛规则";
+
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card";
+---
+
+<RootLayout title={title}>
+    <div class="w-full h-full flex justify-center">
+        <div class="w-2/5 h-full">
+            <div class="text-3xl font-bold py-5">{title}</div>
+            <Card>
+                <CardHeader>
+                    <CardTitle>介绍</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <p
+                        class="float-right bg-[url('/assets/detail-logo-2.png')] w-32 h-24 bg-center bg-no-repeat bg-contain"
+                    >
+                    </p>
+                    <p>
+                        ACM-ICPC以团队的形式代表各学校参赛，参赛队每队3人，在5小时内努力编程解决8道以上的题目（题型包括计算几何、数论、组合数学、搜索技术、动态规划、图论等），最终排名由完成题目数量和时间长短共同决定。
+                    </p>
+                </CardContent>
+            </Card>
+            <div class="my-5 w-full"></div>
+            <Card>
+                <CardHeader>
+                    <CardTitle>参赛队要求</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <p>
+                        ACM-ICPC以团队的形式代表各学校参赛，参赛队可以来自亚洲任何的国家和地区的高校，每个赛区的优胜队伍将获得参加ACM国际大学生程序设计竞赛全球总决赛资格。
+                    </p>
+                    <br />
+                    <p>
+                        亚洲区的高校可以组队参加亚洲的任何一个或者几个赛区的比赛。每队由一名教练和三名队员组成，有些赛区还允许有一名候补队员。每位队员必须是在校学生，有一定的年龄限制，亚洲区的每位参赛选手在一年内最多可参加两个赛区的亚洲区预选赛，每位选手最多可以参加五届亚洲区预选赛和两届全球总决赛。
+                    </p>
+                </CardContent>
+            </Card>
+            <div class="my-5 w-full"></div>
+            <Card>
+                <CardHeader>
+                    <CardTitle>详细规则</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <p>竞赛中至少命题8题，比赛时间为5个小时。</p>
+                    <p
+                        class="float-right bg-[url('/assets/stadium.jpeg')] w-52 h-40 bg-center bg-no-repeat bg-contain"
+                    >
+                    </p>
+                    <br />
+                    <p>
+                        参赛队员可以携带诸如书、手册、程序清单等参考资料，但不允许携带电子设备入场。
+                        赛题的代码提交称为运行（通常由评测系统自动执行），每一次运行会被判为正确或者错误，判决结果会即时显示。
+                    </p>
+                    <br />
+                    <p>
+                        每场比赛的队伍排名由各队解题数量决定，如果多支队解题数量相同，则根据总用时加上惩罚时间进行排名。总用时和惩罚时间由每道解答正确的赛题的用时加上罚时而成。每道题用时将从竞赛开始到该题解答被判定为正确为止，其间每一次错误的运行将被加罚20分钟时间，未正确解答的赛题不记时。
+                    </p>
+                    <br />
+                    <p>
+                        比赛过程中队伍的实时排名会即时更新，选手可以通过排名表（Ranklist）在线查看自己和其他队伍的实时排名以及解出的题目。但比赛的最后一小时排名会停止更新，这也是各队拉开差距的一个机会。
+                        ACM亚洲区比赛语言包括C++、C和Java。
+                    </p>
+                </CardContent>
+            </Card>
+
+            <div class="my-5 w-full"></div>
+            <Card>
+                <CardHeader>
+                    <CardTitle>气球规则</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <p
+                        class="float-right bg-[url('/assets/stadium-2.png')] w-52 h-40 bg-center bg-no-repeat bg-contain"
+                    >
+                    </p>
+                    <p>ACM亚洲区预选赛颁发两个系列的获奖证书：</p>
+                    <br />
+                    <p>
+                        1、金、银、铜奖证书，按排名颁发，颁奖比例分别为参赛队数的10%，20%和30%。
+                    </p>
+
+                    <p>
+                        2、ICPC排名证书，按学校排序，每个学校只取排序最高的队进行排序，其余队和下一所学校的队并列排名，学校排名前30名且获得铜奖的队颁发排名证书。
+                    </p>
+                </CardContent>
+                <div class="my-5 w-full"></div>
+            </Card>
+        </div>
+    </div>
+</RootLayout>

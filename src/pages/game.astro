@@ -1,0 +1,160 @@
+---
+import RootLayout from "@/layouts/RootLayout.astro";
+const title = "竞赛要求";
+
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card";
+---
+
+<RootLayout title={title}>
+    <div class="w-full h-full flex justify-center">
+        <div class="w-2/5 h-full">
+            <div class="text-3xl font-bold py-5">{title}</div>
+            <Card>
+                <CardHeader>
+                    <CardTitle>编程要求</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <p
+                        class="float-right bg-[url('/assets/submit.png')] w-52 h-40 bg-center bg-no-repeat bg-contain"
+                    >
+                    </p>
+                    <p>
+                        ACM允许选手使用三种编程语言进行解题，同时每道题都有时间和内存消耗的限制。
+                    </p>
+                    <p>
+                        选手需要让自己的程序在规定时间和内存范围内，按格式正确输入和输出后台测试样例中的所有数据。此时评判系统返回Yes（平常练习是OJ通常返回Accepted），解题成功。否则视为解题错误。
+                    </p>
+                </CardContent>
+            </Card>
+            <div class="my-5 w-full"></div>
+            <Card>
+                <CardHeader>
+                    <CardTitle>语言要求</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <p>
+                        ACM亚洲区允许使用三种编程语言：C、C++和Java。常使用GNU
+                        GCC/G++作为C/C++编译器，使用sun-java-jdk编译Java，选手可在赛前查询到具体的编译器版本。赛场内通常提供搭载Linux系统的电脑和CodeBlocks编译器，使用PC
+                        Square作为评判系统。
+                    </p>
+                </CardContent>
+            </Card>
+            <div class="my-5 w-full"></div>
+            <Card>
+                <CardHeader>
+                    <CardTitle>格式要求</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <p>
+                        ACM及其重视格式，程序应该从标准输入stdin('Standard
+                        Input')获取输出，并将结果输出到标准输出stdout('Standard
+                        Output')。例如，在C语言可以使用“scanf”、在C++可以使用“cin”进行输入，在C使用“printf”、在C++使用“cout”进行输出。做题时应认真读题，严格按照题目要求输入、输出。输出格式错误评判系统将判错并返回“Presentation
+                        Error”，输入格式错误则可能直接导致程序运行出错。
+                    </p>
+                </CardContent>
+            </Card>
+
+            <div class="my-5 w-full"></div>
+            <Card>
+                <CardHeader>
+                    <CardTitle>代码样例</CardTitle>
+                    <CardDescription
+                        >下面是HDU1000题目的标准代码：</CardDescription
+                    >
+                    <CardContent>
+                        <p>C语言</p>
+                        <pre> 
+                                <code class="c hljs arduino">
+<code class="c hljs arduino"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&lcub;
+    <span class="hljs-keyword">int</span> a,b;
+    <span class="hljs-keyword">while</span>(<span class="hljs-built_in">scanf</span>(<span class="hljs-string">"%d %d"</span>,&amp;a, &amp;b) != EOF)&lcub;
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d\n"</span>,a+b);
+    &rcub;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+&rcub;</code>
+                                </code>
+                            
+                            <p>C++</p>
+<code class="c++ hljs arduino"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&lcub;
+    <span class="hljs-keyword">int</span> a,b;
+    <span class="hljs-keyword">while</span>(<span class="hljs-built_in">cin</span> &gt;&gt; a &gt;&gt; b)&lcub;
+        <span class="hljs-built_in">cout</span> &lt;&lt; a+b &lt;&lt; <span class="hljs-built_in">endl</span>;
+    &rcub;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+&rcub;</code>
+                            <p>Java</p>
+<code class="java hljs"><span class="hljs-keyword">import</span> java.util.Scanner;
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>&lcub;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>&lcub;
+        Scanner scan = <span class="hljs-keyword">new</span> Scanner(System.in);
+        <span class="hljs-keyword">while</span>(scan.hasNext())&lcub;
+            <span class="hljs-keyword">int</span> a = scan.nextInt();
+            <span class="hljs-keyword">int</span> b = scan.nextInt();
+            System.out.println(String.format(<span class="hljs-string">"%d"</span>, a + b));
+        &rcub;
+    &rcub;
+&rcub;</code>
+                        </pre>
+                        <div class="my-5 w-full"></div>
+                    </CardContent>
+                </CardHeader>
+            </Card>
+            <div class="my-5 w-full"></div>
+            <Card>
+                <CardHeader>
+                    <CardTitle>评判系统返回提示语</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <p>
+                        每次代码提交后，评判系统将进行实时实时评判，并返回结果。常见的返回提示如下：
+                    </p>
+                    <br />
+                    <p>Pending：你的答案在排队等待编译；</p>
+                    <p>
+                        Pending
+                        Rejudge：因为数据更新或其他原因，系统将重新判你的答案；
+                    </p>
+                    <p>Compiling：正在编译；</p><p>
+                        Running & Judging：正在运行和判断；
+                    </p>
+                    <p>Yes（平常练习时OJ通常返回Accepted）：程序通过；</p><p>
+                        Presentation Error：答案基本正确，但是格式不对；
+                    </p>
+                    <p>
+                        Wrong
+                        Answer：答案不对，仅仅通过样例数据的测试并不一定是正确答案，一定还有你没想到的地方；
+                    </p>
+                    <p>
+                        Time Limit
+                        Exceeded：运行超出时间限制，检查下是否有死循环，或者应该有更快的计算方法；
+                    </p>
+                    <p>
+                        Memory Limit
+                        Exceeded：超出内存限制，数据可能需要压缩，检查内存是否有泄露；
+                    </p>
+                    <p>
+                        Output Limit
+                        Exceeded：输出超过限制，你的输出比正确答案长了两倍以上；
+                    </p>
+                    <p>
+                        Runtime
+                        Error：运行时错误，包括非法的内存访问，数组越界，指针漂移，调用禁用的系统函数；
+                    </p>
+                    <p>
+                        Compile Error：编译错误，点击后可获得编译器的详细输出。
+                    </p>
+                </CardContent>
+            </Card>
+        </div>
+    </div>
+</RootLayout>
