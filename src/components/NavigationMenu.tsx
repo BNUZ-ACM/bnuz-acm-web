@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { SITE } from '@/config';
+import { cn } from "@/lib/utils"
 import {
     NavigationMenu,
     NavigationMenuContent,
