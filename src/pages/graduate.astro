@@ -1,0 +1,52 @@
+---
+import RootLayout from "@/layouts/RootLayout.astro";
+const title = "历届毕业";
+import { GRADUATE } from "@/config";
+
+import {
+    Table,
+    TableBody,
+    TableCaption,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/components/ui/table";
+---
+
+<RootLayout title={title}>
+    <div class="w-full h-full flex justify-center">
+        <div class="w-2/5 h-full">
+            <div class="text-3xl font-bold py-5">{title}</div>
+            <Table>
+                <TableCaption>毕业成员部分去向</TableCaption>
+                <TableHeader>
+                    <TableRow>
+                        <TableHead className="w-[100px]">年级</TableHead>
+                        <TableHead className="text-center">姓名</TableHead>
+                        <TableHead className="text-right">去向</TableHead>
+                    </TableRow>
+                </TableHeader>
+                {
+                    GRADUATE.sort((a: any, b: any) => b.year - a.year).map(
+                        (item) => (
+                            <TableBody>
+                                <TableRow>
+                                    <TableCell className="font-medium">
+                                        {item.year}
+                                    </TableCell>
+                                    <TableCell className="text-center">
+                                        {item.name}
+                                    </TableCell>
+                                    <TableCell className="text-right">
+                                        {item.to}
+                                    </TableCell>
+                                </TableRow>
+                            </TableBody>
+                        ),
+                    )
+                }
+            </Table>
+        </div>
+    </div>
+</RootLayout>

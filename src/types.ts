@@ -4,7 +4,6 @@ export type Site = {
     author: string;
     describe: string;
     title: string;
-    lightAndDarkMode: boolean;
     mail: string;
 };
 
@@ -25,4 +24,21 @@ export type NavMenu = {
     url: string;
     prefetch?: boolean;
     next?: NavMenu[];
+}
+
+export type Prize = {
+    year: string;
+    game: string;
+    type: string;
+    prize: string;
+    teamName: string;
+    players: string;
+    other: string;
+}
+
+export type Graduate = {
+    year: string;
+    name: string;
+    to: string;
+    other: string;
 }

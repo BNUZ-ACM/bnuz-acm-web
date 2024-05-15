@@ -1,0 +1,53 @@
+---
+import RootLayout from "@/layouts/RootLayout.astro";
+const title = "获奖情况";
+import { PRIZE } from "@/config";
+
+import {
+    Table,
+    TableBody,
+    TableCaption,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/components/ui/table";
+---
+
+<RootLayout title={title}>
+    <div class="w-full h-full flex justify-center">
+        <div class="w-4/5 h-full">
+            <div class="text-3xl font-bold py-5">{title}</div>
+            <Table>
+                <TableCaption>历届成员获奖名单（不全）</TableCaption>
+                <TableHeader>
+                    <TableRow>
+                        <TableHead className="w-[100px]">年份</TableHead>
+                        <TableHead>竞赛名称</TableHead>
+                        <TableHead>奖项</TableHead>
+                        <TableHead>队员</TableHead>
+                        <TableHead className="text-right">队名</TableHead>
+                    </TableRow>
+                </TableHeader>
+                {
+                    PRIZE.sort((a:any, b:any) => b.year - a.year).map((prize) => (
+                        <TableBody>
+                            <TableRow>
+                                <TableCell className="font-medium">
+                                    {prize.year}
+                                </TableCell>
+                                <TableCell>{prize.game}</TableCell>
+                                <TableCell>{prize.type}</TableCell>
+                                <TableCell>{prize.prize}</TableCell>
+                                <TableCell>{prize.teamName}</TableCell>
+                                <TableCell className="text-right">
+                                    {prize.players}
+                                </TableCell>
+                            </TableRow>
+                        </TableBody>
+                    ))
+                }
+            </Table>
+        </div>
+    </div>
+</RootLayout>
